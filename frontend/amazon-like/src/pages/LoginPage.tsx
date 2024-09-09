@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import InputLine from '../components/inputLine'
 import { supabase } from '../supabase/supabaseClient'
+import { redirect, useNavigate } from "react-router-dom"
 
 const LoginPage = () => {
+
+    const navigate = useNavigate()
 
     const [ user, setUser ] = useState({
         email: '',
         password: ''
     })
+
 
     const handleChange = (evt: any)=> {
         setUser({
@@ -33,11 +37,10 @@ const LoginPage = () => {
             }
         }
 
-    const redirect = () => {
-        console.log('redirect');
+    const redirectRegister = () => {
+        navigate('/register')
         
     }
-
 
   return (
     <main>
@@ -46,7 +49,7 @@ const LoginPage = () => {
             <InputLine label="Email" value={user.email} name='email' onChange={handleChange}/>
             <InputLine label="Password" value={user.password} name='password' onChange={handleChange}/>
             <button type="submit">Login</button>
-            <button type="button" onClick={redirect}>Register</button>
+            <button type="button" onClick={redirectRegister}>Register</button>
         </form>
     </main>
   )
