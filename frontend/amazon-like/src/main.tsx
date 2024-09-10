@@ -9,6 +9,9 @@ import ProductListPage from "./pages/ProductListPage.tsx";
 import { Provider } from "react-redux";
 import store from "./store/index.tsx";
 import ProductPage from "./pages/ProductPage.tsx";
+import FirstConnection from './pages/FirstConnection.tsx';
+import { AuthProvider } from './context/AuthContext.tsx';
+import Account from './pages/Account.tsx';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,14 @@ const router = createBrowserRouter([
         element: <ProductPage />,
       },
     ],
+  },
+  {
+    path : '/first-connection',
+    element: <FirstConnection />
+  },
+  {
+    path : '/account',
+    element: <Account />
   },
 ]);
 

@@ -3,6 +3,7 @@
   --color-secondary: #b0b2de;
   --bg-primary: #f8f8f8;
   --bg-secondary: #6c6969;
+  --btn-disabled: #b7b8bb;
 }
 
 * {
@@ -10,4 +11,132 @@
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;;
+  background-color: var(--bg-primary);
+}
+
+ /* LOGIN / REGISTER */
+.auth-page{
+  display: flex;
+  flex-direction: column ;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap:40px;
+  padding: 32px;
+}
+ .auth-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 15px;
+  background-color: white;
+  border-radius: 25px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+ }
+
+ button{
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-primary);
+  color: white;
+  cursor: pointer;
+ }
+
+button:hover{
+  background-color: var(--color-secondary);
+}
+
+button:disabled{
+  background-color: var(--btn-disabled);
+  cursor: not-allowed;
+  colo: black;
+}
+
+.first-connection{
+  padding: 33px 66px;
+}
+
+  /* COMPONENT */
+
+/* Input line */
+
+.inputLine-container{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+/* BTN LOGOUT */
+.btn-logout{
+  background: #c93f3f;
+}
+.btn-logout:hover{
+  background: #db8080;
+}
+
+/* RATING LOSANGE */
+.losange-rating-container{
+  display: flex;
+  gap: 5px;
+}
+
+.losange-rating {
+  width: 25px;
+  height: 25px;
+  background: #f1f1f1;
+  border: 1px solid #d5901a;
+  transform: rotate(45deg);
+}
+
+.losange-rating.active {
+  background: #d5901a;
+}
+
+
+/* PROFILE */
+
+.img-input{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img-input input{
+  display: none;
+
+}
+
+.photo-user-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.photo-user-img{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: blue;
+  object-fit: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
