@@ -1,0 +1,19 @@
+.cart {
+  height: 60px;
+  position: relative;
+}
+.cart_logo {
+  height: 100%;
+  cursor: pointer;
+}
+.cart_badge {
+  color: var(--color-primary);
+  font-weight: bolder;
+  font-size: x-large;
+  position: absolute;
+  inset: 0;
+  left: 10px;
+  top: -5px;
+  text-align: center;
+  cursor: pointer;
+}
