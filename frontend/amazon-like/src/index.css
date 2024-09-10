@@ -1,17 +1,18 @@
 :root {
-
   --color-primary: #646cff;
   --color-secondary: #b0b2de;
-  --bg-primary: #eae7e7;
+  --bg-primary: #f8f8f8;
   --bg-secondary: #6c6969;
   --btn-disabled: #b7b8bb;
 }
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
 body{
   display: flex;
   justify-content: center;
@@ -139,4 +140,3 @@ button:disabled{
   justify-content: center;
   align-items: center;
 }
-
