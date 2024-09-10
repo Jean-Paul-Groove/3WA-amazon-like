@@ -7,24 +7,24 @@ const RegisterPage = () => {
 
     const navigate = useNavigate()
 
-    const [ user, setUser ] = useState({
+    const [ newUser, setnewUser ] = useState({
         email: '',
         password: ''
     })
 
     const handleChange = (evt: any)=> {
-        setUser({
-            ...user,
+        setnewUser({
+            ...newUser,
             [evt.target.name]: evt.target.value
         })
     }
 
-    const signUpNewUser = async (event) => {
+    const signUpNewnewUser = async (event) => {
         event.preventDefault()
         console.log('signInWithEmail');
             const { data, error } = await supabase.auth.signUp({
-                email: user.email,
-                password: user.password,
+                email: newUser.email,
+                password: newUser.password,
               })
             if (error) {
                 console.error('Error:', error.message)
@@ -32,7 +32,7 @@ const RegisterPage = () => {
             }
             else{
                 console.log('Data:', data);
-                
+                navigate('/login')
             }
         }
 
@@ -43,13 +43,16 @@ const RegisterPage = () => {
 
   return (
     <main>
-        Register Page
-        <form onSubmit={signUpNewUser}>
-            <InputLine label="Email" value={user.email} name='email' onChange={handleChange}/>
-            <InputLine label="Password" value={user.password} name='password' onChange={handleChange}/>
-            <button type="submit">Register</button>
-            <button type="button" onClick={redirectLogin}>Login</button>
-        </form>
+        <div className='auth-page'>
+
+            <h2>Inscription</h2>
+            <form onSubmit={signUpNewnewUser} className='auth-container'>
+                <InputLine label="Email" value={newUser.email} name='email' onChange={handleChange}/>
+                <InputLine label="Password" value={newUser.password} name='password' onChange={handleChange}/>
+                <button type="submit">Register</button>
+                <button type="button" onClick={redirectLogin}>Login</button>
+            </form>
+        </div>
     </main>
   )
 }
