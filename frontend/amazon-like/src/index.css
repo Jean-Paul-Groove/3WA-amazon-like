@@ -1,14 +1,12 @@
 :root {
-
   --color-primary: #646cff;
   --color-secondary: #b0b2de;
-  --bg-primary: #eae7e7;
+  --bg-primary: #f8f8f8;
   --bg-secondary: #6c6969;
 }
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import { Product } from "../utils/types";
 import ProductCard from "../components/ProductCard";
-
+import './ProductListPage.css'
 const ProductListPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState({
@@ -42,7 +42,7 @@ const ProductListPage = () => {
   }, [pagination.currentPage, pagination.itemsPerPage, pagination.itemCount])
   return <main>
     <h1>ProductListPage</h1>
-    <section className="produc">
+    <section className="productList">
     {products.length > 0 && products.map(product =>  <ProductCard key={product.id} product={product} />)}
     </section>
     </main>;
