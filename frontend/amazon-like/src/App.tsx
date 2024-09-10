@@ -1,32 +1,30 @@
-import { useState, useEffect } from 'react'
-import { supabase } from './supabase/supabaseClient'
-import LoginPage from './pages/LoginPage'
-import Account from './pages/Account'
-import { useAuth } from './context/AuthContext'
-
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import checkSession from './bridge/checkSession'
 
 function App() {
+  const navigate = useNavigate()
 
-  const [session, setSession] = useState(null)
-
-  const { setUser } = useAuth()
+  const init = async () => {
+    const userData = await checkSession(true);
+    console.log('userData init:',userData.data);
+    
+    if (userData) {
+      console.log("App userData de checkSession", userData);
+      navigate("/account");
+    }
+    else{
+      navigate("/first-connection");
+    }
+  };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('session', session);
-      
-      setSession(session)
-      
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
+    init();
+  }, []);
 
   return (
     <main>
-      {!session ? <LoginPage /> : <Account  key={session.user.id} session={session} />}
+      Chargement en cours....
     </main>
   )
 }

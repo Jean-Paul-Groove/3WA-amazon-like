@@ -1,55 +1,53 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { ChildrenType } from "../lib/types";
-import { supabase } from "../supabase/supabaseClient";
 
 const AuthContext = createContext({
-  user: undefined,
-  setUser: () => {},
+    user: undefined,
+    setUser: () => {},
 });
 
-export const AuthProvider = ({ children }: ChildrenType) => {
+interface User {
+    id: number | undefined;
+    user_id?: string | undefined;
+    name: string | undefined;
+    email: string | undefined;
+    profile_img: string | undefined;
+    rating: Float32Array | undefined;
+    address: string | undefined;
+    type: "SELLER" | "CLIENT" | "ADMIN" | undefined;
+}
 
-  const [user, setUser] = useState();
+export const AuthProvider = ({ children }) => {
 
-    const checkSession = async () => {
-        const session = await supabase.auth.getSession();
-        if (session) {
-            await supabase.rpc('get_user_information', {
-                user_id: session.data.session.user.id
-            }).then(({ data, error }) => {
-                if (error) {
-                    console.error('Error:', error.message)
-                    return
-                }
-                else{
-                    console.log('Data:', data);
-                    setUser(data)
-                }
-            })
-        }
-        else{
-            console.log('No session');
-    }
+    const [ user, setUser ] = useState<User>({
+        id: undefined,
+        name: undefined,
+        email: undefined,
+        profile_img: undefined,
+        rating: undefined,
+        address: undefined,
+        type: undefined ,
 
-    useEffect(()=> {
-        checkSession()
-
-    },[])
+    });
 
 
+    const values = {
+        user,
+        setUser,
+    };
 
+    useEffect(() => {
+        console.log("AuthProvider user", user);
+    }, [user]);
+        
 
-  const values: any = {
-    user,
-    setUser,
-  };
-  return (
-    <AuthContext.Provider value={values}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={values}>
+        {children}
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;
+
