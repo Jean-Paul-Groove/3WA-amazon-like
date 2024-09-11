@@ -11,7 +11,6 @@ import store from "./store/index.tsx";
 import ProductPage from "./pages/ProductPage.tsx";
 import FirstConnection from './pages/FirstConnection.tsx';
 import Account from './pages/Account.tsx';
-import Dashboard from "./pages/Dashboard.tsx";
 import CheckUser from "./bridge/checkUser.tsx";
 
 const router = createBrowserRouter([

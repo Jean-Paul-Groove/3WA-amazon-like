@@ -1,5 +1,5 @@
-import { useAppSelector } from "../store";
-import ProductCard from "./ProductCard";
+import { useAppSelector } from "../../store";
+import ProductCard from "../ProductCard/ProductCard";
 import "./CartDetails.css";
 const CartDetails = () => {
   const cartProducts = useAppSelector((state) => state.cart.products);

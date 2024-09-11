@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import InputLine from "../components/InputLine/InputLine";
 import { supabase } from './../supabase/supabaseClient'; 
 import { ButtonClickEvent } from "../lib/types"; 
-import BTNLogout from "../components/BTNLogout";
+import BTNLogout from "../components/BTNLogout/BTNLogout";
 import { useNavigate } from "react-router-dom";
 
 

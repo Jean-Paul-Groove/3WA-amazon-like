@@ -1,6 +1,6 @@
 import "./NavBar.css";
-import logo from "../assets/amazon.svg";
-import Cart from "./Cart";
+import logo from "../../assets/amazon.svg";
+import Cart from "../Cart/Cart";
 
 const NavBar = () => {
   return (

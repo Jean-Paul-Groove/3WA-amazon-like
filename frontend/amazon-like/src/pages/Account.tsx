@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import checkSession from "../bridge/checkSession";
 import { useNavigate } from "react-router-dom";
-import BTNLogout from "../components/BTNLogout";
+import BTNLogout from "../components/BTNLogout/BTNLogout";
 import DetailWithLabel from "../components/DetailWithLabel/DetailWithLabel";
 import RatingLosange from "../components/RatingLosange/RatingLosange";
 import { useDispatch } from "react-redux";
