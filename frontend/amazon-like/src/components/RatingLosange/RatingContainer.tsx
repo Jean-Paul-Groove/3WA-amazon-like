@@ -3,7 +3,7 @@ import './Rating.css'
 
 type RatingContainerType = {
     rating: number | undefined,
-    size?: string | undefined
+    size?: 'S'|'M'|'L'
 }
 
 const RatingContainer = ({rating,size}:RatingContainerType) => {

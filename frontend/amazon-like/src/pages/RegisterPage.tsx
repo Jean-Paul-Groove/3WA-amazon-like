@@ -31,7 +31,6 @@ const RegisterPage = () => {
                 return
             }
             else{
-                console.log('Data:', data);
                 navigate('/login')
             }
         }

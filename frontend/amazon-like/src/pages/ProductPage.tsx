@@ -28,10 +28,8 @@ const ProductPage = () => {
   async function fetchProductSeller(id:number){
     const res = await dispatch(fetchUserById(id)).unwrap()
     if(res !=null && res.length !==0){
-      console.log("INTO THE FUNCTION BABY")
         setSeller(res[0])
     }
-    console.log(res[0])
   }
   const isSelected = useAppSelector(state => state.cart.products.find(p => p.id ===product?.id))
   useEffect(() => {

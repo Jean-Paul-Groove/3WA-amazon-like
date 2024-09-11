@@ -23,9 +23,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUSer(state,action){
-      if(action.payload != null){
         state.currentUser = action.payload
-      }
     },
   },
 }) 

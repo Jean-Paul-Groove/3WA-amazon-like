@@ -72,7 +72,6 @@ const FirstConnection = () => {
   };
   }
   useEffect(() => {
-    console.log('userMetaData :', userNewMetaData);
   }, [userNewMetaData]);
 
   const submitForm = async (evt: ButtonClickEvent) => {

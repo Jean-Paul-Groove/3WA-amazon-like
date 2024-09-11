@@ -1,0 +1,12 @@
+.logout_container {
+  max-height: 50px;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+.logout_svg {
+  width: 100%;
+  stroke: white;
+}
+.logout_svg:hover {
+  stroke: var(--color-primary);
+}

@@ -16,10 +16,15 @@
   max-height: 100px;
   cursor: pointer;
 }
+.nav-bar_logout {
+  max-height: 50px;
+  cursor: pointer;
+}
 .nav-bar_actions {
   width: 100%;
   display: flex;
   max-height: 60px;
   align-items: center;
   justify-content: flex-end;
+  gap: 1rem;
 }

@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import './SellerCard.css'
 import RatingLosange from '../RatingLosange/RatingLosange';
+import RatingContainer from '../RatingLosange/RatingContainer';
 
 interface SellerCardProps {seller:{ id: number;
   name: string;
   img: string;
   rating: number;}
- 
+  
+  smallRating?:boolean
 }
 const arrayRating = [0, 1 , 2 , 3 , 4];
 
@@ -28,9 +30,8 @@ const SellerCard = (props: SellerCardProps) => {
       <figcaption className="seller-card_caption">
         <p className="seller-card_name
         ">{name}</p><div className='seller-card_rating-container'>
-            {arrayRating.map((_, index) => (
-          <RatingLosange key={index} index={index}  rating={rating}/>
-        ))}
+                                <RatingContainer rating={rating} size={props.smallRating ? 'S' : 'L'} />   
+
 
       
         </div>

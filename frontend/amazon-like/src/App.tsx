@@ -7,10 +7,8 @@ function App() {
 
   const init = async () => {
     const userData = await checkSession(true);
-    console.log('userData init:',userData.data);
     
     if (userData) {
-      console.log("App userData de checkSession", userData);
       navigate("/account");
     }
     else{

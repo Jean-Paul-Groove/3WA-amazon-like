@@ -43,7 +43,7 @@ dispactch(removeProductFromCart(product.id))
       <div className="product-card_price">{product.price.toFixed(2)} <span> €</span></div>
       </div>
       <div className="product-card_footer">
-      {seller &&<div className="product-card_seller-container"><p>Vendu par:</p><SellerCard seller={seller}/></div> }
+      {seller &&<div className="product-card_seller-container"><SellerCard seller={seller} smallRating/></div> }
       <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
 
       </div>
@@ -57,7 +57,7 @@ dispactch(removeProductFromCart(product.id))
         <div className="product-card_price">{product.price.toFixed(2)} <span> €</span></div>
         <h3 className="product-card_title">{product.name}</h3>
         <div className="product-card_category">{product.category}</div>
-        {seller &&<div className="product-card_seller-container"><p>Vendu par:</p><SellerCard seller={seller}/></div> }
+        {seller &&<div className="product-card_seller-container"><SellerCard seller={seller} smallRating/></div> }
         <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
 
         </div>
