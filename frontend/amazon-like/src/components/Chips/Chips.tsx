@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Chips = ({value}:{value:string}) => {
   return (
     <div

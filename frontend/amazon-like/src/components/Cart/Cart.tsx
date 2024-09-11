@@ -1,6 +1,6 @@
-import cart from '../assets/cart.svg'
-import { AppDispatch, useAppSelector } from '../store'
-import { toggleCartDetails } from '../store/cartReducer'
+import cart from '../../assets/cart.svg'
+import { AppDispatch, useAppSelector } from '../../store'
+import { toggleCartDetails } from '../../store/cartReducer'
 import './Cart.css'
 import { useDispatch } from 'react-redux'
 

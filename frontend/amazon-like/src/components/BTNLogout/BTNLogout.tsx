@@ -1,8 +1,8 @@
-import { supabase } from '../supabase/supabaseClient';
+import { supabase } from '../../supabase/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store';
-import { setCurrentUSer } from '../store/userReducer';
+import { AppDispatch } from '../../store';
+import { setCurrentUSer } from '../../store/userReducer';
 
 const BTNLogout = () => {
 
