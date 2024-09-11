@@ -10,6 +10,7 @@
   color: white;
   background-color: black;
   align-items: center;
+  z-index: 5;
 }
 .nav-bar_logo {
   max-height: 100px;

@@ -1,5 +1,7 @@
 .product {
   padding: 3rem;
+  position: relative;
+  width: 100%;
 }
 .product_fig {
   display: flex;
@@ -14,6 +16,7 @@
   aspect-ratio: 1;
   object-fit: contain;
   border-radius: 100%;
+  background-color: white;
 }
 .product_fig_img.selected {
   border: 2px solid var(--color-primary);
@@ -41,7 +44,7 @@
   background-color: var(--color-secondary);
 }
 .product_button.selected {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
 }
 .product_desc_container {
   display: grid;
@@ -50,4 +53,10 @@
 .product_desc_map {
   border: 1px solid black;
   aspect-ratio: 1;
+}
+.product_back-to-products {
+  position: absolute;
+  top: 2rem;
+  left: 3rem;
+  cursor: pointer;
 }

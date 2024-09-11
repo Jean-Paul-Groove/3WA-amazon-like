@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import checkSession from "../bridge/checkSession";
-import { useAuth } from "../context/AuthContext";
-import { supabase } from "../supabase/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import BTNLogout from "../components/BTNLogout";
 import DetailWithLabel from "../components/DetailWithLabel";
 import RatingLosange from "../components/RatingLosange";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "../store";
+import { setCurrentUSer } from "../store/userReducer";
 import Chips from "../components/Chips";
 
 
@@ -13,8 +14,8 @@ import Chips from "../components/Chips";
 const Account = () => {
     const navigate = useNavigate();
 
-    const { user, setUser } = useAuth();
-
+  const dispatch = useDispatch<AppDispatch>()
+  const user = useAppSelector(state => state.user.currentUser)
     const arrayRating = [0, 1 , 2 , 3 , 4];
 
 
@@ -54,7 +55,7 @@ const Account = () => {
             navigate("/first-connection");
           } else {
             console.log("User data from checkSession:", userData);
-            setUser(userData);
+            dispatch(setCurrentUSer(userData))
           }
         } catch (error) {
           console.error("Error in session check:", error);
@@ -77,7 +78,7 @@ const Account = () => {
 
   return (
     <main>
-      {!user ? (
+      {user == null ? (
         <div>
           <h1>Account</h1>
           <p>Chargement...</p>

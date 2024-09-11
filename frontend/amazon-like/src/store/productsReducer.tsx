@@ -33,7 +33,6 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
     }
 })
 export const fetchProductById = createAsyncThunk('products/fetchById', async (id:number):Promise<Product[]>=>{
-  console.log(id)
     const result = await supabase
     .from("product")
     .select("*").eq('id',id)

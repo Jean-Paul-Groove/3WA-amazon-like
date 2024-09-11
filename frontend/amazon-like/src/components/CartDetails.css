@@ -7,12 +7,12 @@
   left: calc(100vw - 300px);
   bottom: 0;
   overflow-y: auto;
-  border: 1px solid var(--bg-primary);
   color: black;
   padding: 0.5rem;
   padding-bottom: 100px;
-  background-color: var(--bg-primary);
+  background-color: white;
   transform: translateX(300px);
+  z-index: 5;
 }
 .cart-details.opened {
   transform: translateX(0);

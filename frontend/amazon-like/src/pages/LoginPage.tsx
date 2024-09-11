@@ -2,12 +2,14 @@ import { useState } from 'react'
 import InputLine from '../components/inputLine'
 import { supabase } from '../supabase/supabaseClient'
 import { useNavigate } from "react-router-dom"
-import { useAuth } from '../context/AuthContext'
 import checkSession from '../bridge/checkSession'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store'
+import { setCurrentUSer } from '../store/userReducer'
 const LoginPage = () => {
 
     const navigate = useNavigate()
-    const { setUser } = useAuth()
+    const dispatch = useDispatch<AppDispatch>()
 
     const [ newUser, setNewUser ] = useState({
         email: '',
@@ -21,9 +23,9 @@ const LoginPage = () => {
         })
     }
 
-    const signInWithEmail = async (event) => {
+    const signInWithEmail = async (event:any) => {
         event.preventDefault()
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { error } = await supabase.auth.signInWithPassword({
                 email: newUser.email,
                 password: newUser.password,
               })
@@ -32,9 +34,9 @@ const LoginPage = () => {
                 return
             }
             else{
-                const userData = await checkSession()
+                const userData = await checkSession(false)
                 if(userData){
-                    setUser(userData)
+                    dispatch(setCurrentUSer(userData))
                     navigate('/account')
                 }
                 else{
@@ -51,8 +53,8 @@ const LoginPage = () => {
     }
 
   return (
-    <main>
-        <div className='auth-page'>
+    <main className='auth-page'>
+
 
         <h2>Connexion</h2>
             <form onSubmit={signInWithEmail} className='auth-container'>
@@ -61,7 +63,7 @@ const LoginPage = () => {
                 <button type="submit">Login</button>
                 <button type="button" onClick={redirectRegister}>Register</button>
             </form>
-        </div>
+
     </main>
   )
 }

@@ -6,20 +6,23 @@ import { useEffect, useState } from "react";
 import { Product } from "../utils/types";
 import './ProductPage.css'
 import { addProductToCart, removeProductFromCart } from "../store/cartReducer";
-import { fetchUserById } from "../store/userReducer";
+import { fetchUserById, Seller } from "../store/userReducer";
+import SellerCard from "../components/SellerCard";
 const ProductPage = () => {
   const productId = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product>();
-  const [seller, setSeller] = useState({})
+  const [seller, setSeller] = useState<Seller>()
   async function fetchProduct() {
-    const res = await dispatch(fetchProductById(+productId)).unwrap();
-    if (res != null && res.length) {
-      setProduct(res[0]);
-     await fetchProductSeller(res[0].sellerId)
-    } else {
-      console.log("RES = null");
+    if(productId){
+      const res = await dispatch(fetchProductById(+productId)).unwrap();
+      if (res != null && res.length) {
+        setProduct(res[0]);
+        await fetchProductSeller(res[0].sellerId)
+      } else {
+        console.log("RES = null");
+      }
     }
   }
   async function fetchProductSeller(id:number){
@@ -46,6 +49,7 @@ const ProductPage = () => {
   if (product) {
     return (
       <main className="product">
+        <div className="product_back-to-products" onClick={()=>navigate('/products')}>← Tous les produits</div>
         <figure className="product_fig">
           <figcaption className="product_fig_caption">
             <h1>{product.name}</h1>
@@ -61,7 +65,9 @@ const ProductPage = () => {
         <div className="product_desc">{product.description}</div>
 <div className="product_desc_map"></div>
         </div>
-        <div className="product_seller"></div>
+        <div className="product_seller">
+          {seller && <SellerCard seller={seller} />}
+        </div>
       </main>
     );
   }

@@ -1,15 +1,17 @@
 import { supabase } from '../supabase/supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
+import { setCurrentUSer } from '../store/userReducer';
 
 const BTNLogout = () => {
 
-    const { setUser } = useAuth();
+    const dispatch= useDispatch<AppDispatch>()
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        setUser(null);
+        dispatch(setCurrentUSer(null))
         navigate("/login");
     }
   return (
