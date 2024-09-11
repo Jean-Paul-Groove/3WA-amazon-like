@@ -4,6 +4,8 @@
   --bg-primary: #f8f8f8;
   --bg-secondary: #6c6969;
   --btn-disabled: #b7b8bb;
+  width: 100%;
+  flex-grow: 1;
 }
 
 * {
@@ -13,27 +15,24 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body {
   min-height: 100vh;
-  width: 100%;;
+  width: 100%;
   background-color: var(--bg-primary);
 }
 
- /* LOGIN / REGISTER */
-.auth-page{
+/* LOGIN / REGISTER */
+.auth-page {
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  gap:40px;
+  gap: 40px;
   padding: 32px;
 }
- .auth-container{
+.auth-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,36 +42,36 @@ body{
   background-color: white;
   border-radius: 25px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
- }
+}
 
- button{
+button {
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
   background-color: var(--color-primary);
   color: white;
   cursor: pointer;
- }
+}
 
-button:hover{
+button:hover {
   background-color: var(--color-secondary);
 }
 
-button:disabled{
+button:disabled {
   background-color: var(--btn-disabled);
   cursor: not-allowed;
   colo: black;
 }
 
-.first-connection{
+.first-connection {
   padding: 33px 66px;
 }
 
-  /* COMPONENT */
+/* COMPONENT */
 
 /* Input line */
 
-.inputLine-container{
+.inputLine-container {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -80,15 +79,15 @@ button:disabled{
 }
 
 /* BTN LOGOUT */
-.btn-logout{
+.btn-logout {
   background: #c93f3f;
 }
-.btn-logout:hover{
+.btn-logout:hover {
   background: #db8080;
 }
 
 /* RATING LOSANGE */
-.losange-rating-container{
+.losange-rating-container {
   display: flex;
   gap: 10px;
 }
@@ -104,11 +103,11 @@ button:disabled{
 
 .losange-active {
   background: #d5901a;
-  border:none;
+  border: none;
 }
 
 /* CHIPS */
-.chips{
+.chips {
   padding: 8px 16px;
   background: #db8080;
   colgroup: black;
@@ -117,9 +116,8 @@ button:disabled{
 
 /* PROFILE */
 
-
 /*  EDIT IMAGE */
-.img-input{
+.img-input {
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -128,20 +126,18 @@ button:disabled{
   justify-content: center;
   align-items: center;
 }
-.img-input input{
+.img-input input {
   display: none;
-
 }
 
-.photo-user-container{
+.photo-user-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
 }
 
-.photo-user-img{
+.photo-user-img {
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -152,10 +148,9 @@ button:disabled{
   align-items: center;
 }
 
-
 /* PICTURE */
 
-.profile-picture{
+.profile-picture {
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -168,13 +163,13 @@ button:disabled{
 
 /* PROFILE INFO */
 
-.account-detail-container{
+.account-detail-container {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.account-details-list{
+.account-details-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -184,16 +179,15 @@ button:disabled{
 
 /* ACCOUNT */
 
-.chips-container{
+.chips-container {
   display: flex;
   gap: 10px;
 }
 
-.userType-container{
+.userType-container {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   padding: 20px 0px;
-
 }
 /*  */

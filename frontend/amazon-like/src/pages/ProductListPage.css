@@ -1,4 +1,10 @@
-.productList {
+.products {
+  padding: 3rem;
+}
+.products_title {
+  text-align: center;
+}
+.products_list {
   padding: 1rem;
   display: flex;
   gap: 0.5rem;

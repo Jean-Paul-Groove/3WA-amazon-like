@@ -40,7 +40,7 @@
   background-color: var(--color-secondary);
 }
 .product-card.selected .product-card_button {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
 }
 .product-card.selected {
   border: 5px solid var(--color-primary);
@@ -55,11 +55,22 @@
 }
 .product-card-horizontal .product-card_button {
   cursor: pointer;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
   border: none;
   padding: 5px 10px;
   border-radius: 50px;
 }
 .product-card-horizontal .product-card_price {
   align-self: center;
+}
+.product-card_seller-container {
+  width: 100%;
+  padding: 5px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--bg-primary);
+}
+.product-card-horizontal .product-card_seller-container {
+  width: 150px;
 }

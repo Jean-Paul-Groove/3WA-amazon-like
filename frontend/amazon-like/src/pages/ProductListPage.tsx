@@ -18,9 +18,9 @@ async function fetchProductsToDisplay(){
     fetchProductsToDisplay()
   }, []);
 
-  return <main>
-    <h1>ProductListPage</h1>
-    <section className="productList">
+  return <main className="products">
+    <h1 className="products_title">Parcourez nos produits</h1>
+    <section className="products_list">
     {productList&&productList.length > 0 && productList.map(product =>  <ProductCard key={product.id} product={product} />)}
     </section>
     </main>;

@@ -2,16 +2,35 @@ import { useDispatch } from "react-redux"
 import { Product } from "../utils/types"
 import './ProductCard.css'
 import { addProductToCart, removeProductFromCart } from "../store/cartReducer"
-import { useAppSelector } from "../store"
+import { AppDispatch, useAppSelector } from "../store"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { fetchUserById, Seller } from "../store/userReducer"
+import SellerCard from "./SellerCard"
 interface ProductCardProps {
   product: Product,
   horizontal?:boolean
 }
 const ProductCard = (props:ProductCardProps) => {
+  const [seller, setSeller] = useState<Seller>()
   const {product, horizontal} = props
-  const dispactch = useDispatch()
+  const dispactch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
   const isSelected = useAppSelector(state => state.cart.products.find(p => p.id ===product.id))
-  function handleClick(){
+  useEffect(()=>{
+    fetchSeller()
+  }, [])
+  async function  fetchSeller(){
+    const res = await dispactch(fetchUserById(product.sellerId)).unwrap()
+    console.log(res)
+    console.log(product.sellerId)
+    if(res != null && res.length){
+      setSeller(res[0])
+      console.log("WE FOUND A SELLER ")
+    }
+  }
+  function handleClick(e:React.MouseEvent){
+    e.stopPropagation()
     if(isSelected){
 dispactch(removeProductFromCart(product.id))
     }
@@ -21,24 +40,28 @@ dispactch(removeProductFromCart(product.id))
   }
   if(horizontal){
     return(<figure className="product-card-horizontal">
+      <div className="product-card_header">
       <img className="product-card_img" src={product.img} alt={product.name} />
-      <div className="product-card_footer">
       <h3 className="product-card_title">{product.name}</h3>
       <div className="product-card_price">{product.price.toFixed(2)} <span> €</span></div>
-      <button className="product-card_button" onClick={()=>handleClick()}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
+      </div>
+      <div className="product-card_footer">
+      {seller &&<div className="product-card_seller-container"><p>Vendu par:</p><SellerCard seller={seller}/></div> }
+      <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
 
       </div>
   </figure>)
   }else{
 
     return (
-      <figure className={isSelected ? "product-card selected" :"product-card"}>
+      <figure onClick={()=>navigate('/products/'+product.id)} className={isSelected ? "product-card selected" :"product-card"}>
         <img className="product-card_img" src={product.img} alt={product.name} />
         <div className="product-card_footer">
         <div className="product-card_price">{product.price.toFixed(2)} <span> €</span></div>
         <h3 className="product-card_title">{product.name}</h3>
         <div className="product-card_category">{product.category}</div>
-        <button className="product-card_button" onClick={()=>handleClick()}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
+        {seller &&<div className="product-card_seller-container"><p>Vendu par:</p><SellerCard seller={seller}/></div> }
+        <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
 
         </div>
     </figure>
