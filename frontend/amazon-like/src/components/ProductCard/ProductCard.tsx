@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux"
-import { Product } from "../utils/types"
+import { Product } from "../../utils/types"
 import './ProductCard.css'
-import { addProductToCart, removeProductFromCart } from "../store/cartReducer"
-import { AppDispatch, useAppSelector } from "../store"
+import { addProductToCart, removeProductFromCart } from "../../store/cartReducer"
+import { AppDispatch, useAppSelector } from "../../store"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { fetchUserById, Seller } from "../store/userReducer"
-import SellerCard from "./SellerCard"
+import { fetchUserById, Seller } from "../../store/userReducer"
+import SellerCard from "../SellerCard/SellerCard"
 interface ProductCardProps {
   product: Product,
   horizontal?:boolean

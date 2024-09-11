@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './SellerCard.css'
-import RatingLosange from './RatingLosange';
+import RatingLosange from '../RatingLosange/RatingLosange';
 
 interface SellerCardProps {seller:{ id: number;
   name: string;

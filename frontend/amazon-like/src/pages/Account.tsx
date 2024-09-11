@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import checkSession from "../bridge/checkSession";
 import { useNavigate } from "react-router-dom";
 import BTNLogout from "../components/BTNLogout";
-import DetailWithLabel from "../components/DetailWithLabel";
-import RatingLosange from "../components/RatingLosange";
+import DetailWithLabel from "../components/DetailWithLabel/DetailWithLabel";
+import RatingLosange from "../components/RatingLosange/RatingLosange";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../store";
 import { setCurrentUSer } from "../store/userReducer";
-import Chips from "../components/Chips";
+import Chips from "../components/Chips/Chips";
+import { supabase } from "../supabase/supabaseClient";
 
 
 

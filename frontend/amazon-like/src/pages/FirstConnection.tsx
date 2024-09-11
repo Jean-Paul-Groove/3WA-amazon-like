@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import InputLine from "../components/inputLine";
+import InputLine from "../components/InputLine/InputLine";
 import { supabase } from './../supabase/supabaseClient'; 
 import { ButtonClickEvent } from "../lib/types"; 
 import BTNLogout from "../components/BTNLogout";
