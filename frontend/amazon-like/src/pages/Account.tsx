@@ -9,6 +9,7 @@ import { AppDispatch, useAppSelector } from "../store";
 import { setCurrentUSer } from "../store/userReducer";
 import Chips from "../components/Chips/Chips";
 import { supabase } from "../supabase/supabaseClient";
+import RatingContainer from "../components/RatingLosange/RatingContainer";
 
 
 
@@ -17,7 +18,6 @@ const Account = () => {
 
   const dispatch = useDispatch<AppDispatch>()
   const user = useAppSelector(state => state.user.currentUser)
-    const arrayRating = [0, 1 , 2 , 3 , 4];
 
 
     const [ userOrderData , setUserOrderData ] = useState([]);
@@ -115,13 +115,7 @@ const Account = () => {
                   >
 
                     <Chips value={user.type} />
-                    <div
-                      className="losange-rating-container"
-                      >
-                      {arrayRating.map((_, index) => (
-                        <RatingLosange key={index} index={_}  rating={user.rating} />
-                      ))}
-                    </div>    
+                    <RatingContainer rating={user.rating} size={'L'} />   
                   </div>
                   <div>
                     <button

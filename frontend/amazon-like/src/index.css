@@ -86,25 +86,6 @@ button:disabled {
   background: #db8080;
 }
 
-/* RATING LOSANGE */
-.losange-rating-container {
-  display: flex;
-  gap: 10px;
-}
-
-.losange-rating {
-  width: 25px;
-  height: 25px;
-  background: #f1f1f1;
-  border: 1px solid #d5901a;
-  transform: rotate(45deg);
-  border-radius: 4px;
-}
-
-.losange-active {
-  background: #d5901a;
-  border: none;
-}
 
 /* CHIPS */
 .chips {

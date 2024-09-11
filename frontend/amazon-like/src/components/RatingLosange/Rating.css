@@ -1,0 +1,46 @@
+@import '../../index.css';
+
+.losange-rating-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 0 5px;
+}
+.losange-rating-container.normal{
+    gap: 8px;
+}
+.losange-rating-container.small{
+    gap: 2px;
+}
+.losange-rating-container.big{
+    gap: 10px;
+}
+
+
+
+.losange-rating{
+    background: #f1f1f1;
+    border: 1px solid #d5901a;
+    transform: rotate(45deg);
+    border-radius: 4px;
+}
+
+.losange-active {
+    background: #d5901a;
+    border: none;
+    }
+
+.losange-rating.normal{
+    width: 12px;
+    height: 12px;
+}
+.losange-rating.small{
+    width: 6px;
+    height: 6px;
+
+}
+.losange-rating.big{
+    width: 20px;
+    height: 20px;
+}
