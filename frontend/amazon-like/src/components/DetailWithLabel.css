@@ -1,0 +1,17 @@
+@import '../index.css';
+
+.detailWithLabel-container{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.detailWithLabel-label{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.detailWithLabel-detail{
+    font-size: 1rem;
+}

@@ -1,5 +1,4 @@
-import React from 'react'
-
+import './DetailWithLabel.css'
 type DetailWithLabelType = {
     label: string,
     content: string

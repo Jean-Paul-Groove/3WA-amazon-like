@@ -42,9 +42,7 @@ const RegisterPage = () => {
         }
 
   return (
-    <main>
-        <div className='auth-page'>
-
+    <main className='auth-page'>
             <h2>Inscription</h2>
             <form onSubmit={signUpNewnewUser} className='auth-container'>
                 <InputLine label="Email" value={newUser.email} name='email' onChange={handleChange}/>
@@ -52,7 +50,6 @@ const RegisterPage = () => {
                 <button type="submit">Register</button>
                 <button type="button" onClick={redirectLogin}>Login</button>
             </form>
-        </div>
     </main>
   )
 }
