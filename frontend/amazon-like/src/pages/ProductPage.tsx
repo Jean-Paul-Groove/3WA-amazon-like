@@ -7,7 +7,7 @@ import { Product } from "../utils/types";
 import './ProductPage.css'
 import { addProductToCart, removeProductFromCart } from "../store/cartReducer";
 import { fetchUserById, Seller } from "../store/userReducer";
-import SellerCard from "../components/SellerCard";
+import SellerCard from "../components/SellerCard/SellerCard";
 const ProductPage = () => {
   const productId = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
