@@ -8,6 +8,8 @@ interface SellerCardProps {seller:{ id: number;
   rating: number;}
  
 }
+const arrayRating = [0, 1 , 2 , 3 , 4];
+
 
 const SellerCard = (props: SellerCardProps) => {
   const { name, img,id,rating } = props.seller;
@@ -25,10 +27,13 @@ const SellerCard = (props: SellerCardProps) => {
       />
       <figcaption className="seller-card_caption">
         <p className="seller-card_name
-        ">{name}</p>
-        {Array.from(5).map((rating, index) => (
-                      <RatingLosange key={index} index={index}  rating={rating}/>
-                    ))}
+        ">{name}</p><div className='seller-card_rating-container'>
+            {arrayRating.map((_, index) => (
+          <RatingLosange key={index} index={index}  rating={rating}/>
+        ))}
+
+      
+        </div>
       </figcaption>
     </figure>
   );

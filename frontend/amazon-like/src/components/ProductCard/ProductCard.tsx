@@ -21,12 +21,9 @@ const ProductCard = (props:ProductCardProps) => {
     fetchSeller()
   }, [])
   async function  fetchSeller(){
-    const res = await dispactch(fetchUserById(product.sellerId)).unwrap()
-    console.log(res)
-    console.log(product.sellerId)
+    const res = await dispactch(fetchUserById(product.seller_id)).unwrap()
     if(res != null && res.length){
       setSeller(res[0])
-      console.log("WE FOUND A SELLER ")
     }
   }
   function handleClick(e:React.MouseEvent){

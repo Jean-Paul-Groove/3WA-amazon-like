@@ -19,7 +19,7 @@ const ProductPage = () => {
       const res = await dispatch(fetchProductById(+productId)).unwrap();
       if (res != null && res.length) {
         setProduct(res[0]);
-        await fetchProductSeller(res[0].sellerId)
+        await fetchProductSeller(res[0].seller_id)
       } else {
         console.log("RES = null");
       }

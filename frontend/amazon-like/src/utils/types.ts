@@ -14,7 +14,7 @@ export interface Product {
   description: string;
   img: string;
   price: number;
-  sellerId: number;
+  seller_id: number;
   status: "AVAILABLE" | "SOLD" | "DELETED";
   orderId: number | null;
   addressId: number | null;
