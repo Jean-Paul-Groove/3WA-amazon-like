@@ -59,7 +59,7 @@ const FirstConnection = () => {
         photo: `${supabaseUrl}/storage/v1/object/public/images/${sessionActive.session.user.id}`,
       });
 
-
+      
       const { data, error } = await supabase
       .storage
       .from('images')

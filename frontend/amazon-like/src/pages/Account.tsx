@@ -3,82 +3,86 @@ import checkSession from "../bridge/checkSession";
 import { useNavigate } from "react-router-dom";
 import BTNLogout from "../components/BTNLogout/BTNLogout";
 import DetailWithLabel from "../components/DetailWithLabel/DetailWithLabel";
-import RatingLosange from "../components/RatingLosange/RatingLosange";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../store";
-import { setCurrentUSer } from "../store/userReducer";
+import { fetchUserById, setCurrentUSer } from "../store/userReducer";
 import Chips from "../components/Chips/Chips";
-import { supabase } from "../supabase/supabaseClient";
 import RatingContainer from "../components/RatingLosange/RatingContainer";
-
+import OrderCard from "../components/OrderCard/OrderCard";
+import { supabase } from "../supabase/supabaseClient";
 
 
 const Account = () => {
+
     const navigate = useNavigate();
 
-  const dispatch = useDispatch<AppDispatch>()
-  const user = useAppSelector(state => state.user.currentUser)
+    const dispatch = useDispatch<AppDispatch>()
+    const user = useAppSelector(state => state.user.currentUser)
 
-
-    const [ userOrderData , setUserOrderData ] = useState([]);
+    const [ userBoughtsHistory , setUserBoughtsHistory ] = useState([]);
+    const [ userSellsHistory , setUserSellsHistory ] = useState([]);
     const[ loading, setLoading ] = useState(true);
-
-    const fetchSellerOrder = async () => {
-        const { data , error } = await supabase.rpc('account_get_seller_orders',{
-          current_user_id: user.id
-        })
-        if(error){
-            console.error('Error fetching user order data:', error);
-            return;
-        }
-        setUserOrderData(data);
-        setLoading(false);
-      }
-
-    const fetchClientOrder = async () => {
-        const { data , error } = await supabase.rpc('account_get_client_orders',{
-          current_user_id: user.id
-        })
-        if(error){
-            console.error('Error fetching user order data:', error);
-            return;
-        }
-        setUserOrderData(data);
-        setLoading(false);
-      }
 
 
     const init = async () => {
         try {
-          const userData = await checkSession(true);
-          console.log('userData init:', userData);
-          if (!userData || !userData.name) {
-            navigate("/first-connection");
-          } else {
-            console.log("User data from checkSession:", userData);
-            dispatch(setCurrentUSer(userData))
+          const userSession = await checkSession(true);
+          if(userSession){
+            const userInfo = await dispatch(fetchUserById(userSession.user_id)).unwrap();
+            if(userInfo){
+              dispatch(setCurrentUSer(
+                {...userInfo,
+                  supabase_token:userSession.supabase_token
+                }
+            ))
+            }
+            else{
+              navigate('/first-connection')
+            }
           }
         } catch (error) {
           console.error("Error in session check:", error);
           navigate("/login");
         }
       };
+
+      // Pour chaque order_id dans history.sold et history.bought je fetch les orders
+
+
+      const fetchOrderHistory = async ( type: string, id:number) => {
+        try{
+          // Fetch bought history
+          const { data: order, error: orderError } = await supabase.rpc(`account_get_${type}_orders`,{
+            order_id : id
+          })
+          if(orderError){
+            console.error('Error fetching bought history:', orderError);
+            return;
+          }
+          {type = 'boughts'}
+          setUserBoughtsHistory([...userBoughtsHistory, order]);
+        }
+        catch(error){
+          console.error('Error fetching history:', error);
+        }
+      }
     
       useEffect(() => {
         init();
       }, []);
-    
-      useEffect(() => {
-        if (user && user.type === "SELLER") {
-          fetchSellerOrder();
-        }
-        else if(user && user.type === "CLIENT"){
-          fetchClientOrder();
-        }
-      }, [user]);
+
+      useEffect(()=> {
+        setLoading(true);
+        console.log('fetch histries');
+        // Fetch bought history
+        // Fetch sold history
+        setLoading(false);
+      },[user])
 
   return (
-    <main>
+    <main
+      className="account-container"
+    >
       {user == null ? (
         <div>
           <h1>Account</h1>
@@ -104,59 +108,78 @@ const Account = () => {
           </div>
           <div>
             <div
-              className="chips-container"
+              className="user-type-rating-container"
             >
-            </div>
-            {user.type === 'SELLER' ? 
-                (
-                  <>
-                  <div
-                    className="userType-container"
-                  >
 
-                    <Chips value={user.type} />
-                    <RatingContainer rating={user.rating} size={'L'} />   
-                  </div>
-                  <div>
+              <Chips value={user.type} />
+              {user.type === 'SELLER' && (<RatingContainer rating={user.rating} size={'L'} />)}
+            </div>
+            <div 
+              className="history_container"
+            >
+                <div
+                  className="order_history_container"
+                >
+                  <div
+                    className="order_history_button"
+                  >
                     <button
                       onClick={() => navigate('/dashboard')}
-                    >
+                      >
                       Mes produits
                     </button>
                   </div>
-                  </>
-
-                )
-              :
-              user.type === 'CLIENT' ? 
-                  (
-                    <>
-                    <div
-                      className="userType-container"
-                    >
-                      <Chips value={user.type} />
-                      <div
-                        className="losange-rating-container"
-                      >
-                        {Array(5).map((rating, index) => (
-                          <RatingLosange key={index} index={index} rating={rating}/>
-                        ))}
-                      </div>   
-                    </div> 
+                  <div
+                    className="order_history_list sell"
+                  >
+                    <h4>Historique des ventes</h4>
                     <div>
-                      <span>Mes historiques d'achats</span>
-                      <div>
-                        
-                      </div>
-                    </div>
-                    </>
-                  )
-                :
-                  (
-                    null
-                  )
-              }
+                      {loading ? 
+                        <p>Chargement...</p> 
+                      :
+                        !user.history.sold ?
+                          <p>Aucune vente</p>
+                          :
+                        (
+                          user.history.sold.map((order) =>{
 
+                            const data = fetchOrderHistory(order);
+
+                            return(
+                              <OrderCard order={data} key={`order-sell-${order}`} />
+                            )} 
+                          )
+                        )
+                      } 
+                     
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="order_history_container"
+                >
+                  <div
+                    className="order_history_list sell"
+                  >
+                    <h4>Historique des ventes</h4>
+                    <div>
+                      {loading ? 
+                        <p>Chargement...</p> 
+                      :
+                        !user.history.bought ?
+                          <p>Aucun achat</p>
+                          :
+                        (
+                          userBoughtsHistory.map((order) => (
+                            <OrderCard order={order} key={`order-bought-${order.id}`} />
+                          ))
+                        )
+                      } 
+                     
+                    </div>
+                  </div>
+                </div>
+            </div>
           </div>
         </div>
       )}

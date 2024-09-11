@@ -1,16 +1,17 @@
-// import { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { AppDispatch } from "../store";
+import { fetchUserById } from "../store/userReducer";
 import { supabase } from "../supabase/supabaseClient";
 import { Token, User } from "../utils/types";
-
+import { useDispatch } from "react-redux";
 // Lorsque je lance la function 
 // cela cherche si il y a une session en cours
 // si il y a une session en cours alors ça cherche si il y a des informations sur l'utilisateur
 // si il n'y a pas d'informations sur l'utilisateur alors on redirige vers la page de première connexion
 // si il n'y a pas de session en cours alors on redirige vers la page de login
 
-const checkSession = async (login:boolean): Promise<null |User &Token> => {
-   // const navigate = useNavigate();
+const checkSession = async (login:boolean) => {
+
     const session = await supabase.auth.getSession();
   
 
@@ -20,32 +21,18 @@ const checkSession = async (login:boolean): Promise<null |User &Token> => {
       if (!isLoginPage) document.location.href = "/login";
       return null;
     } else {
-      const userId = session.data.session?.user.id;
-  
-      if (userId) {
-        const data = await supabase.rpc("get_user_informations", {
-          session_id: userId,
-        });
-        
-        if (data.length === 0) {
-          console.log("Pas d'informations sur l'utilisateur, data vide : ", data);
-          
-          return null;
-        }
-  
-        if (data) {
-          console.log("Données de l'utilisateur : ", data);
-          
-            const userData:User &{supabase_token:string|undefined} = {
-              ...data.data,
-              supabase_token: session?.data?.session?.access_token,
-            };
-    
-            return userData;
-          } else return null;
+      const userSession = {
+        user_id:session.data.session?.user.id,
+        supabase_token:session.data.session?.access_token
       }
-      return null
+
+      if(userSession.user_id){
+        return userSession
+      }
+      else{
+        document.location.href = "/login";
     }
-  };
+  }
+};
   
-  export default checkSession;  
+  export default checkSession;
