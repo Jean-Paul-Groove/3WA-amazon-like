@@ -19,7 +19,7 @@ const ProductPage = () => {
       const res = await dispatch(fetchProductById(+productId)).unwrap();
       if (res != null && res.length) {
         setProduct(res[0]);
-        await fetchProductSeller(res[0].seller_id)
+       fetchProductSeller(res[0].seller_id)
       } else {
         console.log("RES = null");
       }
@@ -27,9 +27,11 @@ const ProductPage = () => {
   }
   async function fetchProductSeller(id:number){
     const res = await dispatch(fetchUserById(id)).unwrap()
-    if(res !=null && res.length ===0){
+    if(res !=null && res.length !==0){
+      console.log("INTO THE FUNCTION BABY")
         setSeller(res[0])
     }
+    console.log(res[0])
   }
   const isSelected = useAppSelector(state => state.cart.products.find(p => p.id ===product?.id))
   useEffect(() => {
