@@ -10,8 +10,6 @@ interface SellerCardProps {seller:{ id: number;
   
   smallRating?:boolean
 }
-const arrayRating = [0, 1 , 2 , 3 , 4];
-
 
 const SellerCard = (props: SellerCardProps) => {
   const { name, img,id,rating } = props.seller;
