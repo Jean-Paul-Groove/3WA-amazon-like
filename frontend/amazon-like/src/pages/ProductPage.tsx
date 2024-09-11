@@ -7,6 +7,7 @@ import { Product } from "../utils/types";
 import './ProductPage.css'
 import { addProductToCart, removeProductFromCart } from "../store/cartReducer";
 import { fetchUserById, Seller } from "../store/userReducer";
+import SellerCard from "../components/SellerCard";
 const ProductPage = () => {
   const productId = useParams().id;
   const dispatch = useDispatch<AppDispatch>();
@@ -64,7 +65,9 @@ const ProductPage = () => {
         <div className="product_desc">{product.description}</div>
 <div className="product_desc_map"></div>
         </div>
-        <div className="product_seller"></div>
+        <div className="product_seller">
+          {seller && <SellerCard seller={seller} />}
+        </div>
       </main>
     );
   }
