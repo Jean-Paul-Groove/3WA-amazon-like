@@ -1,14 +1,18 @@
 
 type RatingLosangeType = {
   index: number,
-  rating?: number
+  rating?: number | undefined,
+  size?: string | undefined
 }
 
-const RatingLosange= ({index, rating}: RatingLosangeType) => {  
+const RatingLosange= ({index, rating,size}: RatingLosangeType) => {  
   
   return (
     <div
-        className={`losange-rating ${index+1 <= rating ? 'losange-active' : null}`}
+        className={`losange-rating 
+            ${size === 'L'? "big" : size === 'S'? "small" :size ==="M" ? "normal" : ""} 
+            ${index+1 <= rating ? 'losange-active' : ''}`
+          }
     />
   )
 }

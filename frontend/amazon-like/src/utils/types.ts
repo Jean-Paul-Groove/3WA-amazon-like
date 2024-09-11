@@ -26,7 +26,7 @@ export interface User {
     name: string | undefined;
     email: string | undefined;
     profile_img: string | undefined;
-    rating: Float32Array | undefined;
+    rating: number | undefined;
     address: string | undefined;
     type: "SELLER" | "CLIENT" | "ADMIN" | undefined;
 }
