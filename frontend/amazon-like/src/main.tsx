@@ -12,6 +12,8 @@ import ProductPage from "./pages/ProductPage.tsx";
 import FirstConnection from './pages/FirstConnection.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
 import Account from './pages/Account.tsx';
+import Dashboard from "./pages/Dashboard.tsx";
+import CheckUser from "./bridge/checkUser.tsx";
 
 const router = createBrowserRouter([
   {
@@ -34,22 +36,28 @@ const router = createBrowserRouter([
         path: "/products/:id",
         element: <ProductPage />,
       },
+      {
+        path : '/account',
+        element: <Account />
+      },
+      {
+        path : '/dashboard',
+        element: <CheckUser />
+      },
     ],
   },
   {
     path : '/first-connection',
     element: <FirstConnection />
   },
-  {
-    path : '/account',
-    element: <Account />
-  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>
+  <AuthProvider>
+    <StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </StrictMode>
+  </AuthProvider>
 );

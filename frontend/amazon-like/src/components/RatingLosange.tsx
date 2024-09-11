@@ -1,17 +1,14 @@
-import React from 'react'
 
 type RatingLosangeType = {
   index: number,
-  rating?: number | undefined
+  rating?: number
 }
 
-const RatingLosange= ({index, rating}: RatingLosangeType) => {
-
-  console.log('rating:', rating);
+const RatingLosange= ({index, rating}: RatingLosangeType) => {  
   
   return (
     <div
-        className={`losange-rating ${index+1 <= rating*1 ? 'losange-active' : null}`}
+        className={`losange-rating ${index+1 <= rating ? 'losange-active' : null}`}
     />
   )
 }

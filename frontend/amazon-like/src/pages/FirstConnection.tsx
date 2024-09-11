@@ -101,8 +101,7 @@ const FirstConnection = () => {
   };
 
   return (
-    <main>
-      <div className="auth-page">
+    <main className="auth-page" >
         <h2>Information personnelles</h2>
         <form 
           onSubmit={submitForm}
@@ -163,7 +162,6 @@ const FirstConnection = () => {
         </form>
 
         <BTNLogout />
-      </div>
     </main>
   );
 };

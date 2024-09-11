@@ -5,7 +5,7 @@ const AuthContext = createContext({
     setUser: () => {},
 });
 
-interface User {
+type UserTypes = {
     id: number | undefined;
     user_id?: string | undefined;
     name: string | undefined;
@@ -18,7 +18,7 @@ interface User {
 
 export const AuthProvider = ({ children }) => {
 
-    const [ user, setUser ] = useState<User>({
+    const [ user, setUser ] = useState<UserTypes>({
         id: undefined,
         name: undefined,
         email: undefined,
@@ -30,15 +30,16 @@ export const AuthProvider = ({ children }) => {
     });
 
 
-    const values = {
-        user,
-        setUser,
-    };
+    
 
     useEffect(() => {
         console.log("AuthProvider user", user);
     }, [user]);
         
+    const values = {
+        user,
+        setUser,
+    };
 
     return (
         <AuthContext.Provider value={values}>
