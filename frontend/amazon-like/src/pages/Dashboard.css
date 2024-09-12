@@ -1,0 +1,39 @@
+.dashboard {
+  padding: 3rem;
+}
+.dashboard h1 {
+  text-align: center;
+}
+.dashboard h2 {
+  margin: 0.5rem;
+}
+.dashboard_list {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+.dashboard_add-product {
+  display: flex;
+  justify-content: space-around;
+}
+.dashboard_add-product_img-container {
+  width: 200px;
+  aspect-ratio: 1;
+}
+.dashboard_add-product_add-picture,
+.dashboard_add-product_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dashboard_add-product_add-picture {
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: white;
+  padding: 0.5rem;
+}
+.dashboard_add-product_section {
+  padding: 1rem;
+  border-radius: 20px;
+  border: 5px solid var(--color-primary);
+}

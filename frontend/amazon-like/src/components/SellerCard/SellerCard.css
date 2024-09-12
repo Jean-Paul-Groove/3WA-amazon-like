@@ -3,10 +3,14 @@
   width: 100%;
   gap: 20px;
   align-items: center;
+  justify-content: space-between;
 }
 .seller-card_img {
   aspect-ratio: 1;
-  width: 100%;
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 20px;
   object-fit: cover;
   border-radius: 100%;
 }

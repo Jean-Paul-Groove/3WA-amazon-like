@@ -60,3 +60,9 @@
   left: 3rem;
   cursor: pointer;
 }
+.product_seller {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 2rem 20%;
+  border: 1px solid var(--bg-secondary);
+}

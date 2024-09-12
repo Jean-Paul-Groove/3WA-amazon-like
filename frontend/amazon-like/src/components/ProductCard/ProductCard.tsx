@@ -5,7 +5,7 @@ import { addProductToCart, removeProductFromCart } from "../../store/cartReducer
 import { AppDispatch, useAppSelector } from "../../store"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { fetchUserById, Seller } from "../../store/userReducer"
+import { fetchSellerById, Seller } from "../../store/userReducer"
 import SellerCard from "../SellerCard/SellerCard"
 interface ProductCardProps {
   product: Product,
@@ -21,12 +21,9 @@ const ProductCard = (props:ProductCardProps) => {
     fetchSeller()
   }, [])
   async function  fetchSeller(){
-    const res = await dispactch(fetchUserById(product.sellerId)).unwrap()
-    console.log(res)
-    console.log(product.sellerId)
+    const res = await dispactch(fetchSellerById(product.seller_id)).unwrap()
     if(res != null && res.length){
       setSeller(res[0])
-      console.log("WE FOUND A SELLER ")
     }
   }
   function handleClick(e:React.MouseEvent){
@@ -46,7 +43,7 @@ dispactch(removeProductFromCart(product.id))
       <div className="product-card_price">{product.price.toFixed(2)} <span> €</span></div>
       </div>
       <div className="product-card_footer">
-      {seller &&<div className="product-card_seller-container"><p>Vendu par:</p><SellerCard seller={seller}/></div> }
+      {seller &&<div className="product-card_seller-container"><SellerCard seller={seller} smallRating/></div> }
       <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
 
       </div>
@@ -60,7 +57,7 @@ dispactch(removeProductFromCart(product.id))
         <div className="product-card_price">{product.price.toFixed(2)} <span> €</span></div>
         <h3 className="product-card_title">{product.name}</h3>
         <div className="product-card_category">{product.category}</div>
-        {seller &&<div className="product-card_seller-container"><p>Vendu par:</p><SellerCard seller={seller}/></div> }
+        {seller &&<div className="product-card_seller-container"><SellerCard seller={seller} smallRating/></div> }
         <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
 
         </div>
