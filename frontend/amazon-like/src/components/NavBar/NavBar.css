@@ -11,6 +11,7 @@
   background-color: black;
   align-items: center;
   z-index: 5;
+  stroke: white;
 }
 .nav-bar_logo {
   max-height: 100px;
@@ -27,4 +28,14 @@
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
+}
+.nav-bar_account-logo {
+  stroke: white;
+  fill: white;
+  height: 60px;
+  aspect-ratio: 1;
+}
+.nav-bar_account-logo:hover {
+  fill: var(--color-primary);
+  stroke: var(--color-primary);
 }

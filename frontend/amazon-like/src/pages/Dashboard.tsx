@@ -75,14 +75,16 @@ const Dashboard = () => {
                 </div>
               </label>
             }
-        <form action="">
+        <form className="dashboard_add-product_form" action="">
           <InputLine label="Nom" value={newProduct.name} name="name" required onChange={handleChange} />
           <InputLine label="Prix" value={newProduct.price} name="price" required onChange={handleChange} />
           <InputLine label="Catégorie"value={newProduct.category} name="category" required onChange={handleChange} />
+          <div className="dashboard_add-product_form_text-area-container">
           <label htmlFor="description">
-            Description
+            Description </label>
             <textarea name="description" value={newProduct.description} onChange={handleChange}/>
-          </label>
+          </div>
+         
           <button onClick={handleSubmitNewProduct} type="submit">Valider</button>
         </form></div>
       </section>
