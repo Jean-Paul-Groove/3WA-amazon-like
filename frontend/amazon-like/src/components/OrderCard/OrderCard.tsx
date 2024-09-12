@@ -1,34 +1,27 @@
 import { formatDate } from '../../utils/FormateDate'
+import { Order } from '../../utils/types'
 import './OrderCard.css'
 import { useNavigate } from 'react-router-dom'
 
-const OrderCard = (props) => {
+const OrderCard = (order : Order) => {
 
     const navigate = useNavigate()
 
     
-
-    const { id, products, totalPrice, status , seller , client, created_at  } = props.order
-
     const handleClick = () => {
-        console.log('clicked', id)
+        console.log('clicked', order.order.id)
     }
-
-    
-    // const formatedDate = formatDate(created_at)
-    
-    // console.log('date formated : ', formatedDate);
 
   return (
     <div
         className='order-card-container'
     >
         <div>
-            <p>{created_at}</p>
-            <span>{totalPrice} €</span>
+            <p>{order.order.created_at}</p>
+            <span>{order.order.total_price} €</span>
         </div>
         <div>
-            {products.map((product) => (
+            {order.order.products?.map((product) => (
                 <div key={`product-${product.id}-order-${id}`}>
                     <p>{product.name}</p>
                     <span>{product.price} €</span>
@@ -36,8 +29,8 @@ const OrderCard = (props) => {
             ))}
         </div>
         <div>
-            <p>{status}</p>
-            <span>{seller}</span>
+            <p>{order.order.status}</p>
+            <span>{order.order.seller.name}</span>
             <button
                 onClick={ handleClick}
                 className='btn-order-card'
