@@ -148,8 +148,6 @@ const FirstConnection = () => {
           </label>
           <button type="submit" disabled={!userNewMetaData.type? true : false}>Confirmer</button>
         </form>
-
-        <BTNLogout />
     </main>
   );
 };

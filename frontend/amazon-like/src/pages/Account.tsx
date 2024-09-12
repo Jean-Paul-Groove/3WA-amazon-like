@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import checkSession from "../bridge/checkSession";
 import { useNavigate } from "react-router-dom";
-import BTNLogout from "../components/BTNLogout/BTNLogout";
 import DetailWithLabel from "../components/DetailWithLabel/DetailWithLabel";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../store";
@@ -110,7 +109,7 @@ const Account = () => {
               <DetailWithLabel label="Adresse" content={user.address} />
             </div>
           </div>
-          <div>
+          <div className="history_container">
             <div className="user-type-rating-container">
               <Chips value={user.type} />
               {user.type === "SELLER" && <RatingContainer rating={user.rating} size={"L"} />}
@@ -132,11 +131,10 @@ const Account = () => {
                       <p>Aucune vente</p>
                     ) : (
                       userSellsHistoryList.map((order, index) => (
-                        <OrderCard order={order} key={`order-sell-${index}`} />
+                        <OrderCard order={order} orderType='SELL' key={`order-sell-${index}`} />
                       ))
                     )}
                   </div>
-                </div>
               </div>
               <div className="order_history_container">
                 <div className="order_history_header">
@@ -147,16 +145,15 @@ const Account = () => {
                       <p>Aucun achat</p>
                     ) : (
                       userBoughtsHistoryList.map((order, index) => (
-                        <OrderCard order={order} key={`order-bought-${index}`} />
+                        <OrderCard order={order} orderType='BOUGHT' key={`order-bought-${index}`} />
                       ))
                     )}
                 </div>
               </div>
           </div>
         </div>
+      </div>
       )}
-
-      <BTNLogout />
     </main>
   );
 };

@@ -14,8 +14,6 @@ export const formatDateFRComplete = (date ) => {
 
     const newDate = new Date(date);
 
-    console.log('new date:', newDate);
-
     const formattedDate = newDate.toLocaleDateString('fr-FR', optionsDate);
     const formattedTime = newDate.toLocaleTimeString('fr-FR', optionsTime);
 
@@ -37,8 +35,6 @@ export const formatDate = (date ) => {
 
     const newDate = new Date(date);
 
-    console.log('new date:', newDate);
-
     const formattedDate = newDate.toLocaleDateString('fr-FR', optionsDate);
     const formattedTime = newDate.toLocaleTimeString('fr-FR', optionsTime);
 
@@ -53,8 +49,6 @@ export const formatTime = (date ) => {
     };
 
     const newDate = new Date(date);
-
-    console.log('new date:', newDate);
 
     const formattedTime = newDate.toLocaleTimeString('fr-FR', optionsTime);
 
