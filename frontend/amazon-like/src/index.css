@@ -87,6 +87,7 @@ button:disabled {
 }
 
 
+
 /* CHIPS */
 .chips {
   padding: 8px 16px;
@@ -160,15 +161,38 @@ button:disabled {
 
 /* ACCOUNT */
 
+.account-container{
+  padding: 25px;
+}
+
 .chips-container {
   display: flex;
   gap: 10px;
 }
 
-.userType-container {
+.user-type-rating-container {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   padding: 20px 0px;
 }
-/*  */
+/* HISTORY */
+
+.history_container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.order_history_container{
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+}
+
+.order_history_button{
+  width: 100%;
+  padding: 10px;
+}
