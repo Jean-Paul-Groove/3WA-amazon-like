@@ -66,3 +66,15 @@
   padding: 2rem 20%;
   border: 1px solid var(--bg-secondary);
 }
+.products_pagination {
+  display: flex;
+  gap: 5px;
+}
+.products_pagination_page {
+  color: var(--color-secondary);
+  font-weight: bold;
+  cursor: pointer;
+}
+.products_pagination_page.currentPage {
+  color: var(--color-primary);
+}
