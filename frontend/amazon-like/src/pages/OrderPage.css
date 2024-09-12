@@ -1,0 +1,97 @@
+.order-page-main{
+    padding: 30px;
+}
+
+.order-page-products-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    padding: 25px;
+}
+
+.order-page-info-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+    padding: 25px;
+}
+
+.order-page-info{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.order-page-info span {
+    font-weight: bold;
+}
+
+.order-page-info .order-page-seller-rating{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.order-page-person-container{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 25px;
+}
+
+
+.order-page-person-img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.order-page-seller-button{
+    width: 100%;
+}
+
+.order-page-map-container{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    padding: 25px;
+}
+
+.order-page-total-price{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-page-total-price span{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.order-page-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-page-title h1{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.order-page-title p{
+    color: gray;
+}
+
+.order-page-title span{
+    color: black;
+    font-size: 22px;
+}
+

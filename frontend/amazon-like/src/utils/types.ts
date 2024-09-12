@@ -49,11 +49,16 @@ export interface Order {
   client : {
     id: number;
     name: string;
+    img: string;
+    contact : string;
   };
   seller: {
     id: number;
     name: string;
     rating : number;
+    address : string;
+    contact : string;
+    img: string;
   };
   products: Product[];
   total_price: number;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Autocomplete.css'
 type AutocompleteValueProps = {
     value: string;
@@ -8,6 +8,7 @@ type AutocompleteValueProps = {
 type AutocompleteProps = {
     input: string;
     setInput : (input:string) => void;
+    setIsOpen : (close:boolean) => void;
 }
 
 // on entre la valeur de l'input initial et la function pour changer cette valeur quand on en choisi une
@@ -16,9 +17,11 @@ type AutocompleteProps = {
 // on peut sélectionner une valeur et la mettre dans l'input
 
 
-const Autocomplete = ({input, setInput} : AutocompleteProps) => {
+const Autocomplete = ({input, setInput, setIsOpen} : AutocompleteProps) => {
     
-    console.log('autocomplete');
+    const [ currentInput, setCurrentInput ] = useState();
+    
+    const bulleRef = useRef(null);
     
     const jaws_token = import.meta.env.VITE_JAWS_KEY
 
@@ -31,12 +34,16 @@ const Autocomplete = ({input, setInput} : AutocompleteProps) => {
         return setResponses(data.features)
     }
 
-    const SearchLine = ({value, id}: AutocompleteValueProps)=> {
+    const SearchLine = ({value}: AutocompleteValueProps)=> {
         
         const handleClick = () => {
-            console.log("selected");
+            setCurrentInput(value);
             setInput(value);
-        }
+            setIsOpen(false);
+            if(bulleRef.current){
+              setIsOpen(false);
+            }
+        }   
 
         return(
             <div
@@ -48,13 +55,21 @@ const Autocomplete = ({input, setInput} : AutocompleteProps) => {
         )
     }
 
+   
     useEffect(() => {
             fetchResponses();
     }, [input])
+    
+    useEffect(() => {
+        if(currentInput === input){
+            setIsOpen(false);
+        }
+    }, [currentInput,input])
 
   return (
     <div
         className='autocomplete-bull-container'
+        ref={bulleRef}
     >
         {responses && 
             (

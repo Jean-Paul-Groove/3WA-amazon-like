@@ -13,6 +13,7 @@ const FirstConnection = () => {
 
   const [ sessionActive, setSessionActive ] = useState<{ session: Session; }>();
   const [ picture, setPicture ] = useState("");
+  const [ autoCompleteAddressIsOpen, setAutoCompleteAddressIsOpen ] = useState(false);
 
   const [userNewMetaData, setNewUserMetaData] = useState({
     photo: '',
@@ -123,6 +124,7 @@ const FirstConnection = () => {
             />
           <div
             className="first-connection-address-container"
+            onClick={() => setAutoCompleteAddressIsOpen(true)}
           >
             <InputLine
               label="Adresse"
@@ -131,7 +133,7 @@ const FirstConnection = () => {
               onChange={handleChange}
               required
               />
-              { userNewMetaData.address.length >= 3 && (
+              { autoCompleteAddressIsOpen && (
                 <Autocomplete 
                 input = {userNewMetaData.address} 
                 setInput = {(input) => 
@@ -140,6 +142,7 @@ const FirstConnection = () => {
                       address: input
                     }
                   )}
+                  setIsOpen={setAutoCompleteAddressIsOpen}
                   />
               )}
           </div>
