@@ -188,11 +188,34 @@ button:disabled {
   padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   border-radius: 12px;
+}
+
+.order_history_header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.order_history_header h4{
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .order_history_button{
   width: 100%;
   padding: 10px;
+}
+
+.order_history_list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+
+
+.first-connection-address-container{
+  position: relative;
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import checkSession from "../bridge/checkSession";
 import { useNavigate } from "react-router-dom";
-import BTNLogout from "../components/BTNLogout/BTNLogout";
 import DetailWithLabel from "../components/DetailWithLabel/DetailWithLabel";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "../store";
@@ -11,6 +10,7 @@ import RatingContainer from "../components/RatingLosange/RatingContainer";
 import OrderCard from "../components/OrderCard/OrderCard";
 import { supabase } from "../supabase/supabaseClient";
 import { OrderListType } from "../utils/types";
+import { uploadImage } from "../utils/supabase/uploadImage";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -28,7 +28,6 @@ const Account = () => {
       return;
     }
     else if ( boughts.length === 0){
-      console.log("Aucun achat");
       return null
     } 
     else{
@@ -36,13 +35,31 @@ const Account = () => {
     }   
   }
   const fetchSellsHistory = async () => {
-    const { data: sells, error: boughtsError } = await supabase.rpc('account_get_sells_orders',{session_user_id : user?.id})
-    if (boughtsError) {
+    const { data: sells, error: sellsError } = await supabase.rpc('account_get_sells_orders',{session_user_id : user.id})
+    if (sellsError) {
       console.error("Erreur lors de la récupération de l'historique des achats :", boughtsError);
       return;
     }
-    console.log(sells);
+    else if ( sells.length === 0){
+      return null
+    } 
+    else{
     setUserSellsHistoryList(sells);
+    }
+  }
+
+  const handlePhoto =async (evt) => {
+
+    if(user){
+      const photoImport = evt.target.files[0];
+
+      const newPicture = await uploadImage('images/user',photoImport,user.user_id)
+
+      dispatch(setCurrentUSer({
+        ...user,
+        profile_img: newPicture,
+      }));
+    };
   }
 
 
@@ -96,60 +113,74 @@ const Account = () => {
       ) : (
         <div>
           <div className="account-detail-container">
-            <img
-              src={user.profile_img + ".png"}
-              alt={`photo de profile de ${user.name}`}
-              className="profile-picture"
-            />
+          {user.profile_img ? 
+            <div className="photo-user-container">
+              <img
+                src={user.profile_img}
+                alt={`photo de profile de ${user.name}`}
+                className="profile-picture"
+              />
+            </div>
+              : 
+              <label>
+                <div className="img-input">
+                  <span>Importer photo</span>
+                  <input type="file" name="photo" onChange={handlePhoto}/>
+                </div>
+              </label>
+            }
+            
             <div className="account-details-list">
               <DetailWithLabel label="Nom" content={user.name} />
               <DetailWithLabel label="Contact" content={user.contact} />
               <DetailWithLabel label="Adresse" content={user.address} />
             </div>
           </div>
-          <div>
+          <div className="history_container">
             <div className="user-type-rating-container">
               <Chips value={user.type} />
               {user.type === "SELLER" && <RatingContainer rating={user.rating} size={"L"} />}
             </div>
             <div className="history_container">
               <div className="order_history_container">
-                <div className="order_history_button">
-                  <button onClick={() => navigate("/dashboard")}>Mes produits</button>
-                </div>
-                <div className="order_history_list sell">
-                  <h4>Historique des ventes</h4>
-                  <div>
+                <div
+                  className="order_history_header"
+                >
+                  <div className="order_history_button">
+                    <button onClick={() => navigate("/dashboard")}>Mes produits</button>
+                  </div>
+                    <h4>Historique des ventes</h4>
+                  </div>
+                  <div 
+                    className="order_history_list"
+                  >
                     {!userSellsHistoryList ? (
                       <p>Aucune vente</p>
                     ) : (
                       userSellsHistoryList.map((order, index) => (
-                        <OrderCard order={order} key={`order-sell-${index}`} />
+                        <OrderCard order={order} orderType='SELL' key={`order-sell-${index}`} />
                       ))
                     )}
                   </div>
-                </div>
               </div>
               <div className="order_history_container">
-                <div className="order_history_list bought">
+                <div className="order_history_header">
                   <h4>Historique des achats</h4>
-                  <div>
+                </div>
+                <div className="order_history_list bought">
                     {!userBoughtsHistoryList ? (
                       <p>Aucun achat</p>
                     ) : (
                       userBoughtsHistoryList.map((order, index) => (
-                        <OrderCard order={order} key={`order-bought-${index}`} />
+                        <OrderCard order={order} orderType='BOUGHT' key={`order-bought-${index}`} />
                       ))
                     )}
-                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
+      </div>
       )}
-
-      <BTNLogout />
     </main>
   );
 };
