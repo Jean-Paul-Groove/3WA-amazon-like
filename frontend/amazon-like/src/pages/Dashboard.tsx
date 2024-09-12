@@ -7,16 +7,15 @@ import "./Dashboard.css";
 import InputLine from "../components/InputLine/InputLine";
 import { postNewProduct } from "../utils/supabase/postProduct";
 const Dashboard = () => {
-  const [sellerProducts, setSellerProducts] = useState<Product[]>([]);
+  interface DashboardProduct extends Product {seller:{id:number,name:string}}
+  const [sellerProducts, setSellerProducts] = useState<DashboardProduct[]>([]);
   const [newProduct, setNewProduct] = useState({name:'',price:'',category:'',description:'',img:''})
   const [picture, setPicture] = useState()
   const currentUser = useAppSelector((state) => state.user.currentUser);
   async function fetchSellerProducts() {
     if (currentUser) {
       if (currentUser.type === "SELLER") {
-        const { data, error } = await supabase.rpc("get_products_for_seller", {
-          current_user_id: currentUser.id,
-        });
+        const { data, error } = await supabase.rpc("get_products_for_seller", {id_of_seller:currentUser.id});
         if (error) {
           console.error("Error fetching seller products:", error);
           return;
@@ -36,7 +35,6 @@ const Dashboard = () => {
     }
   }
   function handlePhoto(evt:React.ChangeEvent){
-    console.log('BOUUUUU')
     const photoImport = evt.target.files[0];
     setPicture(photoImport)
 
@@ -89,9 +87,9 @@ const Dashboard = () => {
         </form></div>
       </section>
       <div className="dashboard_list">
-        {sellerProducts.length > 0 &&
+        {sellerProducts?.length > 0 &&
           sellerProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} hideSeller hideButton />
           ))}
       </div>
     </main>

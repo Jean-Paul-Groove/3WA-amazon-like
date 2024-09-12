@@ -21,6 +21,7 @@
   width: 100%;
   height: 50%;
   object-fit: contain;
+  padding: 1rem;
 }
 .product-card_price {
   font-weight: bold;
