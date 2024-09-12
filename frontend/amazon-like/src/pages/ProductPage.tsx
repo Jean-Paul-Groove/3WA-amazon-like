@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Product } from "../utils/types";
 import './ProductPage.css'
 import { addProductToCart, removeProductFromCart } from "../store/cartReducer";
-import { fetchUserById, Seller } from "../store/userReducer";
+import { fetchSellerById, Seller } from "../store/userReducer";
 import SellerCard from "../components/SellerCard/SellerCard";
 const ProductPage = () => {
   const productId = useParams().id;
@@ -26,7 +26,7 @@ const ProductPage = () => {
     }
   }
   async function fetchProductSeller(id:number){
-    const res = await dispatch(fetchUserById(id)).unwrap()
+    const res = await dispatch(fetchSellerById(id)).unwrap()
     if(res !=null && res.length !==0){
         setSeller(res[0])
     }

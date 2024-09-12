@@ -1,13 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import './SellerCard.css'
-import RatingLosange from '../RatingLosange/RatingLosange';
 import RatingContainer from '../RatingLosange/RatingContainer';
+import { Seller } from '../../store/userReducer';
 
-interface SellerCardProps {seller:{ id: number;
-  name: string;
-  img: string;
-  rating: number;}
-  
+interface SellerCardProps {seller:Seller
   smallRating?:boolean
 }
 

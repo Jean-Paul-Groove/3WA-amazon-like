@@ -5,7 +5,7 @@ import { addProductToCart, removeProductFromCart } from "../../store/cartReducer
 import { AppDispatch, useAppSelector } from "../../store"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { fetchUserById, Seller } from "../../store/userReducer"
+import { fetchSellerById, Seller } from "../../store/userReducer"
 import SellerCard from "../SellerCard/SellerCard"
 interface ProductCardProps {
   product: Product,
@@ -21,7 +21,7 @@ const ProductCard = (props:ProductCardProps) => {
     fetchSeller()
   }, [])
   async function  fetchSeller(){
-    const res = await dispactch(fetchUserById(product.seller_id)).unwrap()
+    const res = await dispactch(fetchSellerById(product.seller_id)).unwrap()
     if(res != null && res.length){
       setSeller(res[0])
     }
