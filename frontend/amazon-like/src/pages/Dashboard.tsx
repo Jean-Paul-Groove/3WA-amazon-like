@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Product } from "../utils/types";
 import { useAppSelector } from "../store";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase/supabaseClient";
 import ProductCard from "../components/ProductCard/ProductCard";
 import "./Dashboard.css";
 import InputLine from "../components/InputLine/InputLine";
+import { postNewProduct } from "../utils/supabase/postProduct";
 const Dashboard = () => {
   const [sellerProducts, setSellerProducts] = useState<Product[]>([]);
   const [newProduct, setNewProduct] = useState({name:'',price:'',category:'',description:'',img:''})
@@ -29,23 +29,24 @@ const Dashboard = () => {
   useEffect(() => {
     fetchSellerProducts();
   }, [currentUser]);
-  function handleChange(e:React.ChangeEvent<HTMLElement>){
+  function handleChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
     e.preventDefault()
     if(e.target.name){
       setNewProduct({...newProduct, [e.target.name]:e.target.value})
     }
   }
-  function handlePhoto(evt:React.ChangeEventHandler<HTMLInputElement>){
+  function handlePhoto(evt:React.ChangeEvent){
     console.log('BOUUUUU')
     const photoImport = evt.target.files[0];
     setPicture(photoImport)
 
       setNewProduct({...newProduct, img:URL.createObjectURL(photoImport)})
   }
-  function handleSubmitNewProduct(e){
+  function handleSubmitNewProduct(e:React.FormEvent){
    e.preventDefault()
-  if(newProduct.category && newProduct.img && newProduct.name && newProduct.price){
-    console.log(newProduct)
+  if(newProduct.category && newProduct.img && newProduct.name && newProduct.price && picture && currentUser?.user_id){
+    const {price,name,category,description} = newProduct
+    postNewProduct({name,category,description,price:+price},currentUser.user_id,picture )
   }
   }
   return (
@@ -82,7 +83,7 @@ const Dashboard = () => {
             Description
             <textarea name="description" value={newProduct.description} onChange={handleChange}/>
           </label>
-          <button ty onClick={handleSubmitNewProduct} type="submit">Valider</button>
+          <button onClick={handleSubmitNewProduct} type="submit">Valider</button>
         </form></div>
       </section>
       <div className="dashboard_list">

@@ -32,7 +32,8 @@ export interface User {
     history: {
       sold: number[],
       bought : number[]
-    }
+    },
+    contact:string|undefined
 }
 
 export interface Token {
@@ -60,6 +61,4 @@ export interface Order {
   status: "AVAILABLE" | "PURCHASED" | "DELIVERY_IN_PROGRESS" | "DELIVERED" | "CANCELLED";
 }
 
-export type OrderListType = {
-  orders: Order[] | null;
-}
+export type OrderListType =  Order[] | null;

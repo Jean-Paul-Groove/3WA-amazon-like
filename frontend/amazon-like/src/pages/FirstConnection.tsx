@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
 import InputLine from "../components/InputLine/InputLine";
 import { supabase } from './../supabase/supabaseClient'; 
-import { ButtonClickEvent } from "../lib/types"; 
 import BTNLogout from "../components/BTNLogout/BTNLogout";
 import { useNavigate } from "react-router-dom";
+import { uploadImage } from "../utils/supabase/uploadImage";
+import { Session } from "@supabase/supabase-js";
 
 
 const FirstConnection = () => {
 
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-
   const navigate = useNavigate();
 
-  const [ sessionActive, setSessionActive ] = useState();
+  const [ sessionActive, setSessionActive ] = useState<{ session: Session; }>();
   const [ picture, setPicture ] = useState("");
 
   const [userNewMetaData, setNewUserMetaData] = useState({
     photo: '',
-    name: undefined,
-    type: undefined,
-    address: undefined,
-    email: undefined,
+    name: '',
+    type: '',
+    address:'',
+    email: '',
   });
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const FirstConnection = () => {
   
   
 
-  const handleChange = (evt) => {
+  const handleChange = (evt:React.ChangeEvent<HTMLInputElement>) => {
     setNewUserMetaData({
       ...userNewMetaData,
       [evt.target.name]: evt.target.value,
@@ -53,28 +52,18 @@ const FirstConnection = () => {
       const photoImport = evt.target.files[0];
 
       setPicture(URL.createObjectURL(photoImport))
-    
+    const pictureUrl = await uploadImage('images/user',photoImport,sessionActive.session.user.id)
       setNewUserMetaData({
         ...userNewMetaData,
-        photo: `${supabaseUrl}/storage/v1/object/public/images/${sessionActive.session.user.id}`,
+        photo: pictureUrl,
       });
 
-
-      const { data, error } = await supabase
-      .storage
-      .from('images')
-      .upload(sessionActive.session.user.id+'.png', photoImport)
-      if (error) {
-        console.error("Erreur lors de l'upload de l'image :", error);
-      } else {
-        console.log('Image uploadée avec succès :', data);
-    }
   };
   }
   useEffect(() => {
   }, [userNewMetaData]);
 
-  const submitForm = async (evt: ButtonClickEvent) => {
+  const submitForm = async (evt: React.FormEvent) => {
     evt.preventDefault();  
     
     if(sessionActive){

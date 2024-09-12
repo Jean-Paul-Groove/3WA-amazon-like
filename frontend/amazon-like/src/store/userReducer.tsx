@@ -8,7 +8,7 @@ type CurrentUser = User & Token |null
 export type Seller = Pick<User, 'id'|'rating'|'name'> & {img:string}
 
 
-export const fetchUserById = createAsyncThunk('products/fetchById', async (id:string|number):Promise<User[]|null>=>{
+export const fetchUserById = createAsyncThunk('products/fetchById', async (id:string|undefined):Promise<User[]|null>=>{
   console.log('fetchUserById',id);
   
       const result = await supabase.rpc("get_user_informations", {

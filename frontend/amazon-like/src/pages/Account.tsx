@@ -22,7 +22,7 @@ const Account = () => {
 
 
   const fetchBoughtsHistory = async () => {
-    const { data: boughts, error: boughtsError } = await supabase.rpc("account_get_boughts_orders",{session_user_id : user.id});
+    const { data: boughts, error: boughtsError } = await supabase.rpc("account_get_boughts_orders",{session_user_id : user?.id});
     if (boughtsError) {
       console.error("Erreur lors de la récupération de l'historique des achats :", boughtsError);
       return;
@@ -36,7 +36,7 @@ const Account = () => {
     }   
   }
   const fetchSellsHistory = async () => {
-    const { data: sells, error: boughtsError } = await supabase.rpc('account_get_sells_orders',{session_user_id : user.id})
+    const { data: sells, error: boughtsError } = await supabase.rpc('account_get_sells_orders',{session_user_id : user?.id})
     if (boughtsError) {
       console.error("Erreur lors de la récupération de l'historique des achats :", boughtsError);
       return;
@@ -77,10 +77,10 @@ const Account = () => {
 
   useEffect(() => {
     if (user) {
-      if(user.history.bought){
+      if(user?.history?.bought){
       fetchBoughtsHistory();
       }
-      if(user.history.sold){
+      if(user?.history?.sold){
       fetchSellsHistory();
       }
     }
