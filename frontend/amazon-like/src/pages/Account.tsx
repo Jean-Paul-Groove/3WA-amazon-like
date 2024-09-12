@@ -146,9 +146,9 @@ const Account = () => {
                 <div
                   className="order_history_header"
                 >
-                  <div className="order_history_button">
+                  {user.type === "SELLER" &&<div className="order_history_button">
                     <button onClick={() => navigate("/dashboard")}>Mes produits</button>
-                  </div>
+                  </div>}
                     <h4>Historique des ventes</h4>
                   </div>
                   <div 

@@ -1,0 +1,12 @@
+.seller-page {
+  padding: 3rem;
+  text-align: center;
+}
+.seller-page_seller-info {
+  width: 50%;
+  margin: 1rem auto;
+}
+.seller-page_product-list {
+  display: flex;
+  gap: 1rem;
+}

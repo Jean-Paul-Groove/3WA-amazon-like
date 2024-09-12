@@ -61,4 +61,5 @@ export interface Order {
   status: "AVAILABLE" | "PURCHASED" | "DELIVERY_IN_PROGRESS" | "DELIVERED" | "CANCELLED";
 }
 
-export type OrderListType =  Order[] | null;
+export type OrderListType = 
+ Order[] | null;

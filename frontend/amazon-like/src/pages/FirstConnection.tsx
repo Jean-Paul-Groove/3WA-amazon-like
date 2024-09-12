@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import InputLine from "../components/InputLine/InputLine";
 import { supabase } from './../supabase/supabaseClient'; 
-import BTNLogout from "../components/BTNLogout/BTNLogout";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../utils/supabase/uploadImage";
 import { Session } from "@supabase/supabase-js";

@@ -81,6 +81,9 @@ const productsSlice = createSlice({
             if (action.payload != null) {
               state.itemCount = action.payload;
               state.totalPages = Math.floor(state.itemCount / state.itemsPerPage);
+              if(state.totalPages === 0){
+                state.totalPages =1
+              }
               if (state.currentPage === 0) {
                 state.currentPage = 1;
               }

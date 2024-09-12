@@ -9,15 +9,18 @@ import { fetchSellerById, Seller } from "../../store/userReducer"
 import SellerCard from "../SellerCard/SellerCard"
 interface ProductCardProps {
   product: Product,
+  hideSeller?:boolean
   horizontal?:boolean
+  hideButton?:boolean
 }
 const ProductCard = (props:ProductCardProps) => {
   const [seller, setSeller] = useState<Seller>()
-  const {product, horizontal} = props
+  const {product, horizontal,hideSeller,hideButton} = props
   const dispactch = useDispatch<AppDispatch>();
   const navigate = useNavigate()
   const isSelected = useAppSelector(state => state.cart.products.find(p => p.id ===product.id))
   useEffect(()=>{
+    if(!hideSeller)
     fetchSeller()
   }, [])
   async function  fetchSeller(){
@@ -27,6 +30,7 @@ const ProductCard = (props:ProductCardProps) => {
     }
   }
   function handleClick(e:React.MouseEvent){
+
     e.stopPropagation()
     if(isSelected){
 dispactch(removeProductFromCart(product.id))
@@ -44,7 +48,7 @@ dispactch(removeProductFromCart(product.id))
       </div>
       <div className="product-card_footer">
       {seller &&<div className="product-card_seller-container"><SellerCard seller={seller} smallRating/></div> }
-      <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
+     {!hideButton && <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>}
 
       </div>
   </figure>)
@@ -58,7 +62,7 @@ dispactch(removeProductFromCart(product.id))
         <h3 className="product-card_title">{product.name}</h3>
         <div className="product-card_category">{product.category}</div>
         {seller &&<div className="product-card_seller-container"><SellerCard seller={seller} smallRating/></div> }
-        <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>
+       { !hideButton && <button className="product-card_button" onClick={handleClick}>{ isSelected ? 'Retirer du panier': 'Ajouter au panier'}</button>}
 
         </div>
     </figure>

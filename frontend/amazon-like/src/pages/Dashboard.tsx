@@ -7,16 +7,15 @@ import "./Dashboard.css";
 import InputLine from "../components/InputLine/InputLine";
 import { postNewProduct } from "../utils/supabase/postProduct";
 const Dashboard = () => {
-  const [sellerProducts, setSellerProducts] = useState<Product[]>([]);
+  interface DashboardProduct extends Product {seller:{id:number,name:string}}
+  const [sellerProducts, setSellerProducts] = useState<DashboardProduct[]>([]);
   const [newProduct, setNewProduct] = useState({name:'',price:'',category:'',description:'',img:''})
   const [picture, setPicture] = useState()
   const currentUser = useAppSelector((state) => state.user.currentUser);
   async function fetchSellerProducts() {
     if (currentUser) {
       if (currentUser.type === "SELLER") {
-        const { data, error } = await supabase.rpc("get_products_for_seller", {
-          current_user_id: currentUser.id,
-        });
+        const { data, error } = await supabase.rpc("get_products_for_seller", {id_of_seller:currentUser.id});
         if (error) {
           console.error("Error fetching seller products:", error);
           return;
@@ -36,7 +35,6 @@ const Dashboard = () => {
     }
   }
   function handlePhoto(evt:React.ChangeEvent){
-    console.log('BOUUUUU')
     const photoImport = evt.target.files[0];
     setPicture(photoImport)
 
@@ -75,21 +73,23 @@ const Dashboard = () => {
                 </div>
               </label>
             }
-        <form action="">
+        <form className="dashboard_add-product_form" action="">
           <InputLine label="Nom" value={newProduct.name} name="name" required onChange={handleChange} />
           <InputLine label="Prix" value={newProduct.price} name="price" required onChange={handleChange} />
           <InputLine label="Catégorie"value={newProduct.category} name="category" required onChange={handleChange} />
+          <div className="dashboard_add-product_form_text-area-container">
           <label htmlFor="description">
-            Description
+            Description </label>
             <textarea name="description" value={newProduct.description} onChange={handleChange}/>
-          </label>
+          </div>
+         
           <button onClick={handleSubmitNewProduct} type="submit">Valider</button>
         </form></div>
       </section>
       <div className="dashboard_list">
-        {sellerProducts.length > 0 &&
+        {sellerProducts?.length > 0 &&
           sellerProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} hideSeller hideButton />
           ))}
       </div>
     </main>
