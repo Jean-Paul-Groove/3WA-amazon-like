@@ -28,7 +28,6 @@ const Account = () => {
       return;
     }
     else if ( boughts.length === 0){
-      console.log("Aucun achat");
       return null
     } 
     else{
@@ -36,13 +35,17 @@ const Account = () => {
     }   
   }
   const fetchSellsHistory = async () => {
-    const { data: sells, error: boughtsError } = await supabase.rpc('account_get_sells_orders',{session_user_id : user?.id})
-    if (boughtsError) {
+    const { data: sells, error: sellsError } = await supabase.rpc('account_get_sells_orders',{session_user_id : user.id})
+    if (sellsError) {
       console.error("Erreur lors de la récupération de l'historique des achats :", boughtsError);
       return;
     }
-    console.log(sells);
+    else if ( sells.length === 0){
+      return null
+    } 
+    else{
     setUserSellsHistoryList(sells);
+    }
   }
 
 
@@ -97,7 +100,7 @@ const Account = () => {
         <div>
           <div className="account-detail-container">
             <img
-              src={user.profile_img + ".png"}
+              src={user.profile_img}
               alt={`photo de profile de ${user.name}`}
               className="profile-picture"
             />
@@ -114,12 +117,17 @@ const Account = () => {
             </div>
             <div className="history_container">
               <div className="order_history_container">
-                <div className="order_history_button">
-                  <button onClick={() => navigate("/dashboard")}>Mes produits</button>
-                </div>
-                <div className="order_history_list sell">
-                  <h4>Historique des ventes</h4>
-                  <div>
+                <div
+                  className="order_history_header"
+                >
+                  <div className="order_history_button">
+                    <button onClick={() => navigate("/dashboard")}>Mes produits</button>
+                  </div>
+                    <h4>Historique des ventes</h4>
+                  </div>
+                  <div 
+                    className="order_history_list"
+                  >
                     {!userSellsHistoryList ? (
                       <p>Aucune vente</p>
                     ) : (
@@ -131,9 +139,10 @@ const Account = () => {
                 </div>
               </div>
               <div className="order_history_container">
-                <div className="order_history_list bought">
+                <div className="order_history_header">
                   <h4>Historique des achats</h4>
-                  <div>
+                </div>
+                <div className="order_history_list bought">
                     {!userBoughtsHistoryList ? (
                       <p>Aucun achat</p>
                     ) : (
@@ -141,10 +150,8 @@ const Account = () => {
                         <OrderCard order={order} key={`order-bought-${index}`} />
                       ))
                     )}
-                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       )}

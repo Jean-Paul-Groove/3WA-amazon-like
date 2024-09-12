@@ -1,4 +1,4 @@
-import { formatDate } from '../../utils/FormateDate'
+import { formatDateFRComplete } from '../../utils/FormateDate'
 import { Order } from '../../utils/types'
 import './OrderCard.css'
 import { useNavigate } from 'react-router-dom'
@@ -19,13 +19,19 @@ const {order}=props
     <div
         className='order-card-container'
     >
-        <div>
-            <p>{order.created_at}</p>
+        <div
+        className='order-card-header'
+        >
+            <p>{formatDateFRComplete(order.created_at )}</p>
             <span>{order.total_price} €</span>
         </div>
-        <div>
+        <div
+        className='order-card_product-list'>
             {order.products?.map((product) => (
-                <div key={`product-${product.id}-order-${order.id}`}>
+                <div 
+                    key={`product-${product.id}-order-${order.id}`}
+                    className='order-card-product-card'
+                >
                     <p>{product.name}</p>
                     <span>{product.price} €</span>
                 </div>

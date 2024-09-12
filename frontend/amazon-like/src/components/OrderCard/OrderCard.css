@@ -8,3 +8,31 @@
     padding: 12px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
+
+.order-card-header{
+    display: flex;
+}
+
+.order-card-header .p{
+    color : gray
+}
+
+.order-card-header .span{
+
+}
+
+.order-card-product-lst{
+
+}
+
+.order-card-product-card{
+
+}
+
+.order-card-product-card .p{
+
+}
+
+.order-card-product-card .span{
+
+}
