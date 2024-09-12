@@ -10,6 +10,7 @@ import RatingContainer from "../components/RatingLosange/RatingContainer";
 import OrderCard from "../components/OrderCard/OrderCard";
 import { supabase } from "../supabase/supabaseClient";
 import { OrderListType } from "../utils/types";
+import { uploadImage } from "../utils/supabase/uploadImage";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -45,6 +46,20 @@ const Account = () => {
     else{
     setUserSellsHistoryList(sells);
     }
+  }
+
+  const handlePhoto =async (evt) => {
+
+    if(user){
+      const photoImport = evt.target.files[0];
+
+      const newPicture = await uploadImage('images/user',photoImport,user.user_id)
+
+      dispatch(setCurrentUSer({
+        ...user,
+        profile_img: newPicture,
+      }));
+    };
   }
 
 
@@ -98,11 +113,23 @@ const Account = () => {
       ) : (
         <div>
           <div className="account-detail-container">
-            <img
-              src={user.profile_img}
-              alt={`photo de profile de ${user.name}`}
-              className="profile-picture"
-            />
+          {user.profile_img ? 
+            <div className="photo-user-container">
+              <img
+                src={user.profile_img}
+                alt={`photo de profile de ${user.name}`}
+                className="profile-picture"
+              />
+            </div>
+              : 
+              <label>
+                <div className="img-input">
+                  <span>Importer photo</span>
+                  <input type="file" name="photo" onChange={handlePhoto}/>
+                </div>
+              </label>
+            }
+            
             <div className="account-details-list">
               <DetailWithLabel label="Nom" content={user.name} />
               <DetailWithLabel label="Contact" content={user.contact} />

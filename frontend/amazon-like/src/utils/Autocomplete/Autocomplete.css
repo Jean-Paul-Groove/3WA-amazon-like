@@ -1,0 +1,28 @@
+
+
+.search-line{
+    width: 100%;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    white-space: ellipsis;
+    padding: 4px;
+
+}
+
+.search-line:hover{
+    background-color: rgb(200, 199, 199);
+}
+
+.autocomplete-bull-container{
+    position: absolute;
+    top:0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+}

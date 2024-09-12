@@ -213,3 +213,9 @@ button:disabled {
   flex-wrap: nowrap;
   gap: 10px;
 }
+
+
+
+.first-connection-address-container{
+  position: relative;
+}

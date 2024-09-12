@@ -5,6 +5,7 @@ import BTNLogout from "../components/BTNLogout/BTNLogout";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../utils/supabase/uploadImage";
 import { Session } from "@supabase/supabase-js";
+import Autocomplete from "../utils/Autocomplete/Autocomplete";
 
 
 const FirstConnection = () => {
@@ -52,14 +53,16 @@ const FirstConnection = () => {
       const photoImport = evt.target.files[0];
 
       setPicture(URL.createObjectURL(photoImport))
-    const pictureUrl = await uploadImage('images/user',photoImport,sessionActive.session.user.id)
-      setNewUserMetaData({
-        ...userNewMetaData,
-        photo: pictureUrl,
-      });
 
-  };
+      const pictureUrl = await uploadImage('images/user',photoImport,sessionActive.session.user.id)
+        setNewUserMetaData({
+          ...userNewMetaData,
+          photo: pictureUrl,
+        });
+
+    };
   }
+  
   useEffect(() => {
   }, [userNewMetaData]);
 
@@ -119,13 +122,28 @@ const FirstConnection = () => {
             onChange={handleChange}
             required
             />
-          <InputLine
-            label="Adresse"
-            value={userNewMetaData.address}
-            name="address"
-            onChange={handleChange}
-            required
-            />
+          <div
+            className="first-connection-address-container"
+          >
+            <InputLine
+              label="Adresse"
+              value={userNewMetaData.address}
+              name="address"
+              onChange={handleChange}
+              required
+              />
+              { userNewMetaData.address.length >= 3 && (
+                <Autocomplete 
+                input = {userNewMetaData.address} 
+                setInput = {(input) => 
+                  setNewUserMetaData(
+                    {...userNewMetaData,
+                      address: input
+                    }
+                  )}
+                  />
+              )}
+          </div>
           <InputLine
             label="Contact"
             value={userNewMetaData.email}
