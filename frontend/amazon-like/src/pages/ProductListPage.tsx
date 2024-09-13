@@ -5,6 +5,7 @@ import  { AppDispatch, useAppSelector } from "../store";
 import { useDispatch } from "react-redux";
 import { fetchProducts, initPagination, switchPage } from "../store/productsReducer";
 import { Product } from "../utils/types";
+import Filters from "../components/Filters/Filters";
 const ProductListPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const productList:Product[] = useAppSelector(state => {
@@ -16,7 +17,7 @@ async function fetchProductsToDisplay(){
 }
   useEffect(() => {
     fetchProductsToDisplay()
-  }, [pagination.currentPage]);
+  }, [pagination.currentPage, pagination.filters]);
 
 function goToPage(pageNumber:number){
   if(pageNumber !== pagination.currentPage){
@@ -25,6 +26,7 @@ function goToPage(pageNumber:number){
 }
   return <main className="products">
     <h1 className="products_title">Parcourez nos produits</h1>
+    <Filters/>
     <section className="products_list">
     {productList&&productList.length > 0 && productList.map(product =>  <ProductCard key={product.id} product={product} />)}
     </section>

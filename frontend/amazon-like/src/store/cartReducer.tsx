@@ -27,9 +27,12 @@ const cartSlice = createSlice({
       },toggleCartDetails(state){
 state.isOpen = !state.isOpen
 return state
+      },resetCart(state){
+        state = initialState
+        return state
       }
   },});
 
-export const { addProductToCart, removeProductFromCart, toggleCartDetails } = cartSlice.actions;
+export const { addProductToCart, removeProductFromCart, toggleCartDetails, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
