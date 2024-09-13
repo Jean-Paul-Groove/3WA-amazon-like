@@ -1,10 +1,10 @@
 import { formatDateFRComplete } from "../../utils/FormateDate";
-import { Order, Product } from "../../utils/types";
+import { SellOrderType, BoughtOrderType, Product } from "../../utils/types";
 import "./OrderCard.css";
 import { useNavigate } from "react-router-dom";
 
 interface OrderCardProps {
-  order: Order;
+  order: SellOrderType | BoughtOrderType;
   orderType: string;
 }
 const OrderCard = (props: OrderCardProps) => {
@@ -16,9 +16,9 @@ const OrderCard = (props: OrderCardProps) => {
     navigate('/order/'+order.id)
   };
 
-  const ProductCard = (product)=>{
+  const ProductCard = ({product})=>{
 
-    const data = product.product;
+    const data = product
         
     return(
     <figure
@@ -27,9 +27,10 @@ const OrderCard = (props: OrderCardProps) => {
       <img className="order-card-product-card-img" src={data.img} alt={data.name} />
       <div className="order-card-product-card-footer">
         <div className="order-card-product-card-price">
-          {data.price} <span> €</span>
+          {data.price}<span> €</span>
         </div>
         <h3 className="order-card-product-card-title">{data.name}</h3>
+        <p>{data.seller.name}</p>
       </div>
     </figure>
   )};
@@ -46,19 +47,12 @@ const OrderCard = (props: OrderCardProps) => {
         ))}
       </div>
       <div className="order-card-body">
-        <p> status de la commande : {order.status}</p>
+        <p> status de la commande : {order.dlv.status}</p>
       </div>
       <div className="order-card-footer">
-        {orderType === "SELL" ? (
+        {orderType === "SELL" && (
           <span>Client : {order.client.name}</span>
-        ) : orderType === "BOUGHT" ? (
-          <span>Vendeur : {order.seller.name}</span>
-        ) : (
-          <div className="order-card-seller-client">
-            <span>Client : {order.client.name}</span>
-            <span>Vendeur : {order.seller.name}</span>
-          </div>
-        )}
+        ) }
         <button onClick={handleClick} className="btn-order-card">
           Voir plus
         </button>

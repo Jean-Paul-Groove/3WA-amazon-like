@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InputLine from '../components/InputLine/InputLine'
 import { supabase } from '../supabase/supabaseClient'
 import { useNavigate } from "react-router-dom"
@@ -6,6 +6,7 @@ import checkSession from '../bridge/checkSession'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 import { setCurrentUSer } from '../store/userReducer'
+import { resetCart } from '../store/cartReducer'
 const LoginPage = () => {
 
     const navigate = useNavigate()
@@ -22,6 +23,14 @@ const LoginPage = () => {
             [evt.target.name]: evt.target.value
         })
     }
+
+    useEffect(()=> {
+       const logout=async ()=> { await supabase.auth.signOut();
+        dispatch(setCurrentUSer(null))
+        dispatch(resetCart())
+       }
+         logout()
+    },[])
 
     const signInWithEmail = async (event:any) => {
         event.preventDefault()
