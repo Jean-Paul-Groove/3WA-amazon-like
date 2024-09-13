@@ -64,7 +64,7 @@ const Autocomplete = ({ input, setInput, setIsOpen }: AutocompleteProps) => {
   
     useEffect(() => {
         if(currentInput === input){
-            setIsOpen(false);
+           // setIsOpen(false);
         }
     }, [currentInput,input])
   

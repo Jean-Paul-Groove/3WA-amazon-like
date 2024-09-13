@@ -13,7 +13,11 @@ import FirstConnection from './pages/FirstConnection.tsx';
 import Account from './pages/Account.tsx';
 import CheckUser from "./bridge/checkUser.tsx";
 import SellerPage from "./pages/SellerPage.tsx";
+
 import OrderPage from "./pages/OrderPage.tsx";
+
+import CheckoutPage from "./pages/CheckoutPage.tsx";
+
 
 const router = createBrowserRouter([
   {
@@ -28,7 +32,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      {
+      { index:true,
         path: "/products",
         element: <ProductListPage />,
       },
@@ -47,6 +51,9 @@ const router = createBrowserRouter([
       {
         path : '/seller/:id',
         element: <SellerPage />
+      },      {
+        path : '/checkout',
+        element: <CheckoutPage />
       },
       {
         path : '/order/:id',
