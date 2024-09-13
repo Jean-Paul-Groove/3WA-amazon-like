@@ -4,6 +4,7 @@ import { AppDispatch, useAppSelector } from '../../store'
 import { setCurrentUSer } from '../../store/userReducer'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../supabase/supabaseClient'
+import { resetCart } from '../../store/cartReducer'
 
 const Logout = () => {
 
@@ -14,6 +15,7 @@ const Logout = () => {
     const handleLogout = async () => {
         await supabase.auth.signOut();
         dispatch(setCurrentUSer(null))
+        dispatch(resetCart())
         navigate("/login");
     }
   return (isConnected ?

@@ -10,7 +10,8 @@ const initialState = {
   startRange: 0,
   endRange: 0,
   status:'PENDING',
-  productsDisplayed:[] as Product[]
+  productsDisplayed:[] as Product[],
+  filters:{category:[], priceRange:{lowest:0,highest:999999},nameSearch:''}
 };
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_undefined , thunkApi)=> {
     const getState = thunkApi.getState as () => RootState
@@ -19,10 +20,20 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
         if(productsState.currentPage>0 && productsState.itemCount>0){
             const startRange = (productsState.currentPage-1)*productsState.itemsPerPage
             const endRange = startRange + productsState.itemsPerPage
-           const result = await supabase
-          .from("product")
-          .select("*").order('created_at',{ascending:false}).range(startRange,endRange)
-         
+            
+           let result 
+           if(productsState.filters.nameSearch?.length>0){
+            result= await supabase
+            .from("product")
+            .select("*").gte('price',productsState.filters.priceRange.lowest).lte('price',productsState.filters.priceRange.highest).textSearch('name',productsState.filters.nameSearch, {type:'websearch'}).order('created_at',{ascending:false}).range(startRange,endRange)
+           
+           }else{
+            result= await supabase
+            .from("product")
+            .select("*").gte('price',productsState.filters.priceRange.lowest).lte('price',productsState.filters.priceRange.highest).order('created_at',{ascending:false}).range(startRange,endRange)
+           
+           }
+          
             if(result.error){
                 throw result.error
             }
@@ -72,6 +83,29 @@ const productsSlice = createSlice({
       state.endRange = state.startRange + state.itemsPerPage;
       return state;
     },
+    setSearchNameFilter(state,action){
+      state.filters.nameSearch = action.payload
+      return state
+    },
+    setLowerPriceRangeFilter(state,action){
+      if(typeof action.payload ==='number'){
+        if(action.payload>state.filters.priceRange.highest){
+          state.filters.priceRange.lowest = state.filters.priceRange.highest
+        }else{
+          state.filters.priceRange.lowest = action.payload
+        }
+      }
+      return state
+    },    setHigherPriceRangeFilter(state,action){
+      if(typeof action.payload ==='number'){
+        if(action.payload<state.filters.priceRange.lowest){
+          state.filters.priceRange.highest = state.filters.priceRange.lowest
+        }else{
+          state.filters.priceRange.highest = action.payload
+        }
+      }
+      return state
+    }
   },extraReducers(builder) {
       builder.addCase(initPagination.rejected, (state) => {
         state.status = 'REJECTED'
@@ -109,6 +143,6 @@ const productsSlice = createSlice({
   
 }});
 
-export const { switchPage } = productsSlice.actions;
+export const { switchPage, setSearchNameFilter, setLowerPriceRangeFilter, setHigherPriceRangeFilter } = productsSlice.actions;
 
 export default productsSlice.reducer;
