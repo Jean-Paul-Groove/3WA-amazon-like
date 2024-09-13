@@ -8,7 +8,11 @@ export const uploadImage = async (folderPath:string, file:File,fileName:string)=
     .from(folderPath)
     .upload(fileName, file)
     if (error) {
-      console.error("Erreur lors de l'upload de l'image :", error);
+      if(error.error === 'Duplicate'){
+        console.log("erreur duplicate");
+        
+          return `${supabaseUrl}/storage/v1/object/public/${data?.fullPath}`
+      }
     } else {
       console.log('Image uploadée avec succès :', data);
   }

@@ -95,3 +95,9 @@
     font-size: 22px;
 }
 
+.order-page-map-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+

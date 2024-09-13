@@ -133,7 +133,7 @@ const Account = () => {
             <div className="account-details-list">
               <DetailWithLabel label="Nom" content={user.name} />
               <DetailWithLabel label="Contact" content={user.contact} />
-              <DetailWithLabel label="Adresse" content={user.address} />
+              <DetailWithLabel label="Adresse" content={user.address?.label} />
             </div>
           </div>
           <div className="history_container">

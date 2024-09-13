@@ -20,6 +20,8 @@ const FirstConnection = () => {
     name: '',
     type: '',
     address:'',
+    longitude: 0,
+    latitude: 0,
     email: '',
   });
 
@@ -62,7 +64,7 @@ const FirstConnection = () => {
 
     };
   }
-  
+
   useEffect(() => {
   }, [userNewMetaData]);
 
@@ -136,10 +138,12 @@ const FirstConnection = () => {
               { autoCompleteAddressIsOpen && (
                 <Autocomplete 
                 input = {userNewMetaData.address} 
-                setInput = {(input) => 
+                setInput = {(input, latitude, longitude) => 
                   setNewUserMetaData(
                     {...userNewMetaData,
-                      address: input
+                      address: input,
+                      longitude: Number(longitude),
+                      latitude: Number(latitude)
                     }
                   )}
                   setIsOpen={setAutoCompleteAddressIsOpen}

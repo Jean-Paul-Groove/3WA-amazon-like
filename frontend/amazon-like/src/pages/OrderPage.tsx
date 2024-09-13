@@ -6,19 +6,24 @@ import { useAppSelector } from '../store';
 import { Order } from '../utils/types';
 import RatingContainer from '../components/RatingLosange/RatingContainer';
 import { formatDate } from '../utils/FormateDate';
+import Map from '../components/Map/Map';
+import { LatLngExpression } from 'leaflet';
 
 
 const OrderPage = () => {
+
+
     const [ order, setOrder ] = useState<Order>();
     const navigate = useNavigate();
 
     const user = useAppSelector((state) => state.user.currentUser);
 
+    const pos:LatLngExpression = [45.3530, 2.9128]
+
     const id = useParams().id;
 
     const init = async () => {
-        if(user){
-
+        if(user ){
             const { data, error } = await supabase.rpc('order_get_order_information',{
                 session_user_id: user.id,
                 order_id: id
@@ -33,7 +38,7 @@ const OrderPage = () => {
             }
         }
         else{
-            return navigate('/login');
+            return navigate('/account');
         }
     }
 
@@ -148,8 +153,22 @@ const OrderPage = () => {
                     <div
                         className='order-page-map-container'
                     >
-                        {/* ici la carte du point de départ de la commande */}
-                        {/* ici la carte du point de livraison de la commande */}
+                        <div className='order-page-map'>
+                            Adresse du vendeur :
+                            {/* ici la carte du point de départ de la commande */}
+                            <Map 
+                                popUpMessage='Adresse du vendeur' 
+                                pos={pos}
+                                />
+                        </div>
+                            {/* ici la carte du point de livraison de la commande */}
+                            <div className='order-page-map'>
+                            Adresse de livraison :
+                            <Map 
+                                popUpMessage='Adresse de livraison' 
+                                pos={pos}
+                            />
+                        </div>
                     </div>
             </>
         )

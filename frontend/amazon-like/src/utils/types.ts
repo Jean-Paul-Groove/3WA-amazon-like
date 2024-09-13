@@ -27,7 +27,10 @@ export interface User {
     email: string | undefined;
     profile_img: string | undefined;
     rating: number | undefined;
-    address: string | undefined;
+    address: {
+      label:string | undefined;
+      position: number[] | [];
+    };
     type: "SELLER" | "CLIENT" | "ADMIN";
     history: {
       sold: number[],
@@ -43,7 +46,10 @@ export interface Token {
 export interface Order {
   id: number;
   dlv :{
-    address: string;
+    address: {
+      label:string | undefined;
+      position: number[] | [];
+    };
     date: Date;
   }
   client : {
@@ -56,7 +62,10 @@ export interface Order {
     id: number;
     name: string;
     rating : number;
-    address : string;
+    address: {
+      label:string | undefined;
+      position: number[] | [];
+    };
     contact : string;
     img: string;
   };
