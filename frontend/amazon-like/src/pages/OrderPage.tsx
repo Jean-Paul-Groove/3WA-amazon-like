@@ -6,6 +6,7 @@ import { useAppSelector } from '../store';
 import { Order } from '../utils/types';
 import RatingContainer from '../components/RatingLosange/RatingContainer';
 import { formatDate } from '../utils/FormateDate';
+import Map from '../components/Map/Map';
 
 
 const OrderPage = () => {
@@ -154,6 +155,20 @@ const OrderPage = () => {
                     </div>
                     ))}
                 </div>
+                {/* <div
+                        className='order-page-map-container'
+                    >
+                        
+                            {order.dlv_address.position.length=== 2 &&
+                                <div className='order-page-map'>
+                                    Adresse de livraison :
+                                    <Map 
+                                        popUpMessage='Adresse de livraison' 
+                                        pos={order.dlv_address.position}
+                                    />
+                                </div> 
+                        }    
+                    </div> */}
             </>
         )
         :
