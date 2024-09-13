@@ -7,7 +7,6 @@ import { Order } from '../utils/types';
 import RatingContainer from '../components/RatingLosange/RatingContainer';
 import { formatDate } from '../utils/FormateDate';
 import Map from '../components/Map/Map';
-import { LatLngExpression } from 'leaflet';
 
 
 const OrderPage = () => {
@@ -18,7 +17,7 @@ const OrderPage = () => {
 
     const user = useAppSelector((state) => state.user.currentUser);
 
-    const pos:LatLngExpression = [45.3530, 2.9128]
+    const pos = [45.3530, 2.9128]
 
     const id = useParams().id;
 
@@ -101,7 +100,7 @@ const OrderPage = () => {
                             >
                             <h4> Client </h4>
                             <p> Nom : <span>{order.client.name}</span></p>
-                            <p> Adresse de livraison : <span>{order.dlv.address}</span></p>
+                            <p> Adresse de livraison : <span>{order.dlv.address.label}</span></p>
                         </div>
                     </div>
                     <div
@@ -117,7 +116,7 @@ const OrderPage = () => {
                             >
                             <h4> Vendeur </h4>
                             <p> Nom : <span>{order.seller.name}</span></p>
-                            <p> Adresse de vente : <span>{order.seller.address}</span></p>
+                            <p> Adresse de vente : <span>{order.seller.address.label}</span></p>
                             <div
                                 className='order-page-seller-rating'
                             >
@@ -153,22 +152,26 @@ const OrderPage = () => {
                     <div
                         className='order-page-map-container'
                     >
-                        <div className='order-page-map'>
-                            Adresse du vendeur :
-                            {/* ici la carte du point de départ de la commande */}
-                            <Map 
-                                popUpMessage='Adresse du vendeur' 
-                                pos={pos}
-                                />
-                        </div>
-                            {/* ici la carte du point de livraison de la commande */}
+                        { order.seller.address.position.length=== 2 &&
                             <div className='order-page-map'>
-                            Adresse de livraison :
-                            <Map 
-                                popUpMessage='Adresse de livraison' 
-                                pos={pos}
-                            />
-                        </div>
+                                Adresse du vendeur :
+                                {/* ici la carte du point de départ de la commande */}
+                                <Map 
+                                    popUpMessage='Adresse du vendeur' 
+                                    pos={order.seller.address.position}
+                                    />
+                            </div>
+                            }
+                            {/* ici la carte du point de livraison de la commande */}
+                            {order.dlv.address.position.length=== 2 &&
+                                <div className='order-page-map'>
+                                    Adresse de livraison :
+                                    <Map 
+                                        popUpMessage='Adresse de livraison' 
+                                        pos={order.dlv.address.position}
+                                    />
+                                </div>
+                            }      
                     </div>
             </>
         )
