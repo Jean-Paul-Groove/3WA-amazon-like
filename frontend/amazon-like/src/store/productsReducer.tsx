@@ -25,12 +25,12 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
            if(productsState.filters.nameSearch?.length>0){
             result= await supabase
             .from("product")
-            .select("*").gte('price',productsState.filters.priceRange.lowest).lte('price',productsState.filters.priceRange.highest).textSearch('name',productsState.filters.nameSearch, {type:'websearch'}).order('created_at',{ascending:false}).range(startRange,endRange)
+            .select("*").gte('price',productsState.filters.priceRange.lowest).lte('price',productsState.filters.priceRange.highest).textSearch('name',productsState.filters.nameSearch, {type:'websearch'}).order('created_at',{ascending:false}).range(startRange,endRange).eq('status','AVAILABLE')
            
            }else{
             result= await supabase
             .from("product")
-            .select("*").gte('price',productsState.filters.priceRange.lowest).lte('price',productsState.filters.priceRange.highest).order('created_at',{ascending:false}).range(startRange,endRange)
+            .select("*").gte('price',productsState.filters.priceRange.lowest).lte('price',productsState.filters.priceRange.highest).order('created_at',{ascending:false}).range(startRange,endRange).eq('status','AVAILABLE')
            
            }
           
@@ -49,6 +49,15 @@ export const fetchProductById = createAsyncThunk('products/fetchById', async (id
     .select("*").eq('id',id)
     return result.data as Product[]
   })
+export const deleteProduct = createAsyncThunk('products/deleteOne',async(id:number)=>{
+  await supabase.rpc('delete_product', {id_of_product:id})
+})
+export const updateProduct = createAsyncThunk('proproducts/updateOne', async(product:Product)=>{
+const {id,name,description,category,price, img} = product
+console.log(product)
+console.log( {id_of_product:id,payload:{name,description,category,img,price:+price}})
+await supabase.rpc('update_product', {id_of_product:id,payload:{name,description,category,img,price:+price}})
+})
 export const initPagination = createAsyncThunk<number >('products/initPagination', async (_undefined, {rejectWithValue})=> {
     try{
        const result = await supabase

@@ -6,33 +6,33 @@ import ProductCard from "../components/ProductCard/ProductCard";
 import Autocomplete from "../utils/Autocomplete/Autocomplete";
 type DeliveryMode = "INDIVIDUAL" | "PICK_UP";
 type Address = {
-  label: string;
-  position: [longitude: number, latitude: number];
+  label: string |undefined;
+  position: number[];
 };
 const CheckoutPage = () => {
   const cart = useAppSelector((state) => state.cart);
   const navigate = useNavigate();
-  const currentUserHomeAddress = useAppSelector(
-    (state) => state.user.currentUser?.address
+  const currentUser = useAppSelector(
+    (state) => state.user.currentUser
   );
   const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("INDIVIDUAL");
   const [newAddress, setNewAddress] = useState<Address>({
     label: "",
     position: [0, 0],
   });
-  const [homeAddress, setHomeAddress] = useState<Address>();
   const [selectedAddress, setSelectedAddress] = useState<Address>();
   const [isChangeAddress, setChangeAddress] = useState(false);
   useEffect(() => {
     if (cart && cart.products.length === 0) {
       navigate("/products", { replace: true });
     }
+
   }, [cart]);
   useEffect(() => {
-    if (deliveryMode === "INDIVIDUAL") {
-      setSelectedAddress(homeAddress);
+    if (deliveryMode === "INDIVIDUAL" && currentUser?.address) {
+      setSelectedAddress(currentUser?.address);
     }
-  }, [homeAddress, deliveryMode]);
+  }, [currentUser?.address, deliveryMode]);
   function changeAddress() {
     setChangeAddress(true);
   }
@@ -51,6 +51,17 @@ const CheckoutPage = () => {
     e.stopPropagation();
     setNewAddress({ label: "", position: [0,0] });
     setChangeAddress(false);
+  }
+  async function handleConfirmOrder(e:React.MouseEvent){
+    e.stopPropagation()
+    try{
+      if(!selectedAddress?.label){
+        throw new Error('No address was selected')
+      }
+      console.log({products:cart.products.map(product => product.id), client_id:currentUser?.id})
+    }catch(error){
+      console.log(error)
+    }
   }
   return (
     <main className="checkout">
@@ -101,7 +112,7 @@ const CheckoutPage = () => {
             </div>
           </fieldset>
           <div className="checkout_delivery_home-address">
-            {currentUserHomeAddress && deliveryMode === "INDIVIDUAL" ? (
+            {currentUser?.address && deliveryMode === "INDIVIDUAL" ? (
               isChangeAddress ? (
                 <div>
                   <input
@@ -125,7 +136,7 @@ const CheckoutPage = () => {
               ) : (
                 <div>
                   Livraison:
-                  <p>{currentUserHomeAddress.label}</p>
+                  <p>{currentUser?.address.label}</p>
                   <button onClick={() => changeAddress()}>
                     Choisir une autre adresse
                   </button>
@@ -140,7 +151,7 @@ const CheckoutPage = () => {
       <section>
         <h2>Moyen de paiement</h2>
       </section>
-      <button>Confirmer</button>
+      <button onClick={handleConfirmOrder}>Confirmer</button>
     </main>
   );
 };
