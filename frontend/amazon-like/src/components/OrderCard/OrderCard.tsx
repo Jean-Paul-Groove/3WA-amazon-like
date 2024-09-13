@@ -13,9 +13,7 @@ const OrderCard = (props: OrderCardProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log("order :", order.id);
-    
-    // navigate('/order/'+order.id)
+    navigate('/order/'+order.id)
   };
 
   const ProductCard = (product)=>{

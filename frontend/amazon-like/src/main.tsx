@@ -13,6 +13,7 @@ import FirstConnection from './pages/FirstConnection.tsx';
 import Account from './pages/Account.tsx';
 import CheckUser from "./bridge/checkUser.tsx";
 import SellerPage from "./pages/SellerPage.tsx";
+import OrderPage from "./pages/OrderPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,9 +43,14 @@ const router = createBrowserRouter([
       {
         path : '/dashboard',
         element: <CheckUser />
-      },      {
+      },
+      {
         path : '/seller/:id',
         element: <SellerPage />
+      },
+      {
+        path : '/order/:id',
+        element: <OrderPage />
       },
     ],
   },
