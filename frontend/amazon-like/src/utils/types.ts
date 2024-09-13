@@ -43,37 +43,94 @@ export interface Token {
     supabase_token:string|undefined
 }
 
+
 export interface Order {
   id: number;
   dlv :{
-    address: {
-      label:string | undefined;
-      position: number[] | [];
-    };
-    date: Date;
+    status:  "AVAILABLE" | "PURCHASED" | "DELIVERY_IN_PROGRESS" | "DELIVERED" | "CANCELLED";;
   }
-  client : {
+  dlv_address : {
+    label: string;
+    position: number[];
+  };
+  client? : {
     id: number;
     name: string;
     img: string;
     contact : string;
   };
-  seller: {
-    id: number;
-    name: string;
-    rating : number;
-    address: {
-      label:string | undefined;
-      position: number[] | [];
-    };
-    contact : string;
-    img: string;
-  };
-  products: Product[];
+  dlv_slip:[
+      {
+      id: number;
+      exp:{
+        address : {
+          label: string;
+          position: number[];
+        };
+      },
+      products: Product[] ;
+      informations_seller: {
+        id: number;
+        name: string;
+        img: string;
+        contact : string;
+        rating: number;
+      }
+    }
+  ];
   total_price: number;
   created_at: string;
-  status: "AVAILABLE" | "PURCHASED" | "DELIVERY_IN_PROGRESS" | "DELIVERED" | "CANCELLED";
 }
 
 export type OrderListType = 
  Order[] | null;
+
+export type SellOrderType = {
+  id: number;
+  dlv :{
+    type : "DELIVERY" | "PICKUP";
+    dlv_date? : string;
+    address : {
+      label: string;
+      position: number[];
+    };
+    status:  "AVAILABLE" | "PURCHASED" | "DELIVERY_IN_PROGRESS" | "DELIVERED" | "CANCELLED";;
+  }
+  client? : {
+    id: number;
+    name: string;
+    img: string;
+    contact : string;
+  };
+  products: Product[] ;
+  total_price: number;
+  created_at: string;
+}
+
+export type BoughtOrderType = {
+  id: number;
+  dlv :{
+    address : {
+      type : "DELIVERY" | "PICKUP";
+      dlv_date? : string;
+      label : string;
+      position : number[];
+    }
+    status:  "AVAILABLE" | "PURCHASED" | "DELIVERY_IN_PROGRESS" | "DELIVERED" | "CANCELLED";;
+  }
+  products: [
+    {
+      id: number,
+      img: string,
+      name : string ,
+      price: number,
+      seller : {
+        id : number,
+        name : string,
+        rating : number
+      }
+    }
+  ];
+  total_price: number;
+  created_at: string;
+}

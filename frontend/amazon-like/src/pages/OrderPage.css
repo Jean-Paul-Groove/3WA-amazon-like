@@ -100,4 +100,18 @@
     justify-content: space-between;
     align-items: center;
 }
+.order-page-slip-container{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.order-page-slip{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
 

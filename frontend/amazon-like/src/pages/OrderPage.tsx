@@ -6,7 +6,6 @@ import { useAppSelector } from '../store';
 import { Order } from '../utils/types';
 import RatingContainer from '../components/RatingLosange/RatingContainer';
 import { formatDate } from '../utils/FormateDate';
-import Map from '../components/Map/Map';
 
 
 const OrderPage = () => {
@@ -25,7 +24,7 @@ const OrderPage = () => {
         if(user ){
             const { data, error } = await supabase.rpc('order_get_order_information',{
                 session_user_id: user.id,
-                order_id: id
+                current_order_id: id
             });
             if(error ) {
                 console.error("Erreur lors de la récupération de la commande :", error);
@@ -33,7 +32,6 @@ const OrderPage = () => {
             }
             else{
                 setOrder(data);
-                console.log('order data :',data);
             }
         }
         else{
@@ -80,94 +78,82 @@ const OrderPage = () => {
                     <p> Date de la commande : <span>{formatDate(order.created_at)}</span></p>
                 </div>
                 <div
+                    className='order-page-total-price'
+                >
+                    <p>Total du montant de la commande : <span>{order.total_price} €</span></p>
+                </div>
+                <div
                     className='order-page-info-container'
                 >
                     <div
                         className='order-page-person-container'
                     >
                         <img 
-                            src={order.client.img} 
-                            alt={order.client.name} 
+                            src={order?.client?.img} 
+                            alt={order?.client?.name} 
                             className='order-page-person-img'
                             />
                         <div
                             className='order-page-info'
                             >
                             <h4> Client </h4>
-                            <p> Nom : <span>{order.client.name}</span></p>
-                            <p> Adresse de livraison : <span>{order.dlv.address.label}</span></p>
-                        </div>
-                    </div>
-                    <div
-                        className='order-page-person-container'
-                    >
-                        <img 
-                            src={order.seller.img} 
-                            alt={order.client.name} 
-                            className='order-page-person-img'
-                            />
-                        <div
-                            className='order-page-info'
-                            >
-                            <h4> Vendeur </h4>
-                            <p> Nom : <span>{order.seller.name}</span></p>
-                            <p> Adresse de vente : <span>{order.seller.address.label}</span></p>
-                            <div
-                                className='order-page-seller-rating'
-                            >
-                            <p> Note :</p>
-                            <RatingContainer rating={order.seller.rating} size={"M"}/>
-                            </div>
-                            <div
-                                className='order-page-seller-button'
-                            >
-                                <button
-                                    onClick={() => navigate('/seller/'+order.seller.id)}
-                                    >Voir page du vendeur
-                                </button>
-                            </div>
+                            <p> Nom : <span>{order?.client?.name}</span></p>
+                            <p> Adresse de livraison : <span>{order.dlv_address.label}</span></p>
                         </div>
                     </div>
                 </div>
                 <div
-                    className='order-page-total-price'
+                    className='order-page-slip-container'
                 >
-                    <p>Total du montant de la commande : <span>{order.total_price} €</span></p>
-                </div>
-                <div>
-                    <h2>Produits</h2>
-                    <div
-                        className='order-page-products-list'
-                    >
-                        {order.products && order.products.map((product) => (
-                            <ProductCard data={product} key={product.id}/>
-                        ))}
-                    </div>
-                </div>
-                    <div
-                        className='order-page-map-container'
-                    >
-                        { order.seller.address.position?.length=== 2 &&
-                            <div className='order-page-map'>
-                                Adresse du vendeur :
-                                {/* ici la carte du point de départ de la commande */}
-                                <Map 
-                                    popUpMessage='Adresse du vendeur' 
-                                    pos={order.seller.address.position}
-                                    />
-                            </div>
-                            }
-                            {/* ici la carte du point de livraison de la commande */}
-                            {order.dlv.address.position?.length=== 2 &&
-                                <div className='order-page-map'>
-                                    Adresse de livraison :
-                                    <Map 
-                                        popUpMessage='Adresse de livraison' 
-                                        pos={order.dlv.address.position}
-                                    />
+                    { order.dlv_slip.map((slip) => (
+                        <div
+                            className='order-page-slip'
+                            key={`slip-${slip.id}`}
+                        >
+                        <div
+                            className='order-page-person-container'
+                        >
+                            <img 
+                                src={slip.informations_seller.img} 
+                                alt={slip.informations_seller.name} 
+                                className='order-page-person-img'
+                                />
+                            <div
+                                className='order-page-info'
+                                >
+                                <h4> Vendeur </h4>
+                                <p> Nom : <span>{slip.informations_seller?.name}</span></p>
+                                <p> Adresse de vente : <span>{slip.exp.address?.label}</span></p>
+                                <div
+                                    className='order-page-seller-rating'
+                                >
+                                <p> Note :</p>
+                                <RatingContainer rating={slip.informations_seller?.rating} size={"M"}/>
                                 </div>
-                            }      
+                                <div
+                                    className='order-page-seller-button'
+                                >
+                                    <button
+                                        onClick={() => navigate('/seller/'+slip.informations_seller?.id)}
+                                        >Voir page du vendeur
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h2>Produits</h2>
+                            <div
+                                className='order-page-products-list'
+                            >
+                                {slip.products && slip.products.map((product) => (
+                                    <ProductCard data={product} key={`slip-${slip.id}-product-${product.id}`}/>
+                                ))}
+                            </div>
+                        </div>
                     </div>
+                    ))}
+                </div>
             </>
         )
         :
