@@ -45,12 +45,7 @@ const OrderPage = () => {
         init();
     },[]);
 
-    const ProductCard = ({data})=>{
-        
-
-
-        console.log("product dans order page :",data);
-        
+    const ProductCard = ({data})=>{        
         
         const handleClick = () => {
             navigate('/products/'+data.id);
@@ -152,7 +147,7 @@ const OrderPage = () => {
                     <div
                         className='order-page-map-container'
                     >
-                        { order.seller.address.position.length=== 2 &&
+                        { order.seller.address.position?.length=== 2 &&
                             <div className='order-page-map'>
                                 Adresse du vendeur :
                                 {/* ici la carte du point de départ de la commande */}
@@ -163,7 +158,7 @@ const OrderPage = () => {
                             </div>
                             }
                             {/* ici la carte du point de livraison de la commande */}
-                            {order.dlv.address.position.length=== 2 &&
+                            {order.dlv.address.position?.length=== 2 &&
                                 <div className='order-page-map'>
                                     Adresse de livraison :
                                     <Map 
